@@ -1,0 +1,318 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AdminUser {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  role         String        @default("ADMIN")
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  sessions     Session[]
+  activityLogs ActivityLog[]
+  revisions    Revision[]
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  user      AdminUser @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+}
+
+model SiteSettings {
+  id                     String   @id @default(cuid())
+  companyName            String
+  shortName              String?
+  tagline                String?
+  logoUrl                String?
+  faviconUrl             String?
+  phoneDisplay           String?
+  phoneRaw               String?
+  whatsappNumber         String?
+  whatsappDefaultMessage String?
+  email                  String?
+  supportEmail           String?
+  address                String?
+  googleMapsLink         String?
+  businessHours          String?
+  socialLinks            String?
+  heroHeading            String?
+  heroSubtitle           String?
+  heroCtaPrimaryText     String?
+  heroCtaPrimaryLink     String?
+  heroCtaSecondaryText   String?
+  heroCtaSecondaryLink   String?
+  heroImageUrl           String?
+  heroBackgroundUrl      String?
+  heroBadgeText          String?
+  aboutTitle             String?
+  aboutDescription       String?
+  mission                String?
+  vision                 String?
+  footerText             String?
+  disclaimer             String?
+  seoTitle               String?
+  seoDescription         String?
+  seoKeywords            String?
+  seoDefaultImageUrl     String?
+  metaPixelId            String?
+  googleAnalyticsId      String?
+  whyChooseUsContent     String?
+  howItWorksContent      String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model Service {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  shortDesc    String
+  fullDesc     String?
+  icon         String?
+  imageUrl     String?
+  ctaText      String?
+  ctaLink      String?
+  displayOrder Int       @default(0)
+  status       String    @default("PUBLISHED")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model LoanService {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  description  String?
+  features     String?
+  eligibility  String?
+  documents    String?
+  ctaText      String?
+  ctaLink      String?
+  imageUrl     String?
+  displayOrder Int       @default(0)
+  status       String    @default("PUBLISHED")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model DocumentItem {
+  id            String    @id @default(cuid())
+  name          String
+  description   String?
+  applicableFor String?
+  required      Boolean   @default(true)
+  displayOrder  Int       @default(0)
+  status        String    @default("PUBLISHED")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+}
+
+model Property {
+  id           String          @id @default(cuid())
+  title        String
+  slug         String?         @unique
+  type         String
+  location     String?
+  description  String?
+  features     String?
+  status       String          @default("PUBLISHED")
+  featured     Boolean         @default(false)
+  displayOrder Int             @default(0)
+  images       PropertyImage[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  deletedAt    DateTime?
+}
+
+model PropertyImage {
+  id         String   @id @default(cuid())
+  url        String
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId String
+  altText    String?
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+}
+
+model TeamMember {
+  id              String    @id @default(cuid())
+  name            String
+  designation     String?
+  bio             String?
+  profileImageUrl String?
+  linkedIn        String?
+  email           String?
+  phone           String?
+  displayOrder    Int       @default(0)
+  status          String    @default("PUBLISHED")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+}
+
+model Testimonial {
+  id           String    @id @default(cuid())
+  clientName   String
+  designation  String?
+  location     String?
+  service      String?
+  text         String
+  photoUrl     String?
+  status       String    @default("PUBLISHED")
+  displayOrder Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model BlogPost {
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  category       String
+  shortDesc      String?
+  content        String?
+  coverImageUrl  String?
+  author         String?
+  seoTitle       String?
+  seoDescription String?
+  status         String    @default("DRAFT")
+  publishedAt    DateTime?
+  displayOrder   Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+}
+
+model Faq {
+  id           String    @id @default(cuid())
+  question     String
+  answer       String
+  category     String?
+  displayOrder Int       @default(0)
+  status       String    @default("PUBLISHED")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model NavigationItem {
+  id           String    @id @default(cuid())
+  label        String
+  url          String
+  openInNewTab Boolean   @default(false)
+  displayOrder Int       @default(0)
+  status       String    @default("PUBLISHED")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model MediaItem {
+  id              String   @id @default(cuid())
+  url             String
+  fileName        String
+  fileType        String
+  size            Int
+  category        String?
+  storageProvider String?  @default("local")
+  storagePath     String?
+  createdAt       DateTime @default(now())
+}
+
+model Lead {
+  id          String     @id @default(cuid())
+  name        String
+  phone       String
+  email       String?
+  city        String?
+  requirement String?
+  loanType    String?
+  amount      String?
+  message     String?
+  source      String?
+  status      String     @default("NEW")
+  priority    String     @default("MEDIUM")
+  assignedTo  String?
+  notes       String?
+  followUpAt  DateTime?
+  followUps   FollowUp[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
+}
+
+model FollowUp {
+  id          String   @id @default(cuid())
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId      String
+  scheduledAt DateTime
+  notes       String?
+  status      String   @default("PENDING")
+  createdBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model WebsiteSection {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  title     String?
+  content   String
+  status    String   @default("PUBLISHED")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Consultation {
+  id            String    @id @default(cuid())
+  name          String
+  phone         String
+  email         String?
+  service       String?
+  preferredDate DateTime?
+  preferredTime String?
+  message       String?
+  status        String    @default("REQUESTED")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+}
+
+model ActivityLog {
+  id        String    @id @default(cuid())
+  user      AdminUser @relation(fields: [userId], references: [id])
+  userId    String
+  action    String
+  entity    String
+  entityId  String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime  @default(now())
+}
+
+model Revision {
+  id          String    @id @default(cuid())
+  entity      String
+  entityId    String
+  changes     String
+  summary     String?
+  createdBy   AdminUser @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt   DateTime  @default(now())
+}
