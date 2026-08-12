@@ -31,15 +31,33 @@ const SERVICES_DROPDOWN = [
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
   const pathname = usePathname();
   const { openConsultationModal } = useConsultation();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 20);
+
+      if (currentScrollY <= 20) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current + 5) {
+        setIsVisible(false);
+        setMobileMenuOpen(false);
+        setServicesOpen(false);
+      } else if (currentScrollY < lastScrollY.current - 5) {
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -63,18 +81,25 @@ export const Navbar: React.FC = () => {
     { name: "Contact", href: "/contact" },
   ];
 
-  // Header bg: scrolled = solid deep red; unscrolled = gradient from brand
+  const isHomePage = pathname === "/";
+
   const headerBg = isScrolled
-    ? "bg-brand-mid shadow-xl py-2.5 border-b border-gold-glow"
-    : "bg-brand-gradient py-4";
+    ? "bg-brand-light shadow-xl py-2.5 border-b border-gold-primary/40"
+    : isHomePage
+      ? "bg-transparent py-4 border-b border-transparent"
+      : "bg-brand-primary py-4 border-b border-gold-primary/20";
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${headerBg}`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      } ${headerBg}`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative h-11 w-11 sm:h-12 sm:w-12 rounded-xl overflow-hidden bg-white p-0.5 shadow-lg shadow-black/30 border-2 border-gold-primary group-hover:scale-105 transition-transform shrink-0">
+        <Link href="/" className="group flex min-w-0 shrink items-center gap-2 sm:gap-2.5 md:gap-3">
+          <div className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 md:h-12 md:w-12 rounded-xl overflow-hidden bg-white p-0.5 shadow-lg shadow-black/30 border-2 border-gold-primary transition-transform group-hover:scale-105">
             <Image
               src={COMPANY_CONFIG.logoUrl}
               alt={COMPANY_CONFIG.name}
@@ -84,14 +109,14 @@ export const Navbar: React.FC = () => {
               unoptimized
             />
           </div>
-          <div className="flex items-center gap-2">
-            <span className="font-black text-base sm:text-lg md:text-xl text-white tracking-wider whitespace-nowrap drop-shadow-sm">
-              NP WEALTH
+          <span className="inline-flex items-center whitespace-nowrap leading-none">
+            <span className="font-black text-sm tracking-[0.04em] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] sm:text-base md:text-lg lg:text-xl">
+              NP
             </span>
-            <span className="font-black text-base sm:text-lg md:text-xl text-gold-light tracking-wider whitespace-nowrap drop-shadow-sm">
-              MANAGERS
+            <span className="ml-1 font-semibold text-xs tracking-[0.02em] text-gold-light drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] sm:ml-1.5 sm:text-sm md:text-base lg:text-lg">
+              Wealth Managers
             </span>
-          </div>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -109,7 +134,7 @@ export const Navbar: React.FC = () => {
                       pathname === "/loans" ||
                       pathname === "/real-estate"
                         ? "text-gold-light bg-white/15 border-b-2 border-gold-primary"
-                        : "text-white hover:text-gold-light hover:bg-white/10"
+                        : "text-white hover:text-gold-light hover:bg-white/15"
                     }`}
                 >
                   <span>Services</span>
@@ -182,7 +207,7 @@ export const Navbar: React.FC = () => {
                 className={`px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-all duration-200 ${
                   pathname === link.href
                     ? "text-gold-light bg-white/15 border-b-2 border-gold-primary"
-                    : "text-white hover:text-gold-light hover:bg-white/10"
+                    : "text-white hover:text-gold-light hover:bg-white/15"
                 }`}
               >
                 {link.name}
@@ -195,7 +220,7 @@ export const Navbar: React.FC = () => {
         <div className="hidden lg:flex items-center gap-4">
           <a
             href={`tel:${COMPANY_CONFIG.phoneRaw}`}
-            className="flex items-center gap-2 text-xs font-semibold text-white/80 hover:text-gold-light transition-colors"
+            className="flex items-center gap-2 text-xs font-bold text-white hover:text-gold-light transition-colors drop-shadow-sm"
           >
             <Phone className="w-3.5 h-3.5 text-gold-primary" />
             <span>{COMPANY_CONFIG.phoneDisplay}</span>

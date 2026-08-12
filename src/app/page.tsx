@@ -23,7 +23,6 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const settings = await prisma.siteSettings.findFirst({ orderBy: { updatedAt: "desc" } });
-  const services = await prisma.service.findMany({ where: { status: "PUBLISHED" }, orderBy: { displayOrder: "asc" } });
   const properties = await prisma.property.findMany({ where: { status: "PUBLISHED" }, orderBy: { displayOrder: "asc" }, include: { images: true } });
   const team = await prisma.teamMember.findMany({ where: { status: "PUBLISHED" }, orderBy: { displayOrder: "asc" } });
   const testimonials = await prisma.testimonial.findMany({ where: { status: "PUBLISHED" }, orderBy: { displayOrder: "asc" } });
@@ -33,7 +32,7 @@ export default async function HomePage() {
       <HeroSection settings={settings ?? null} />
       <TrustBar />
       <AboutSection />
-      <ServicesSection services={services} />
+      <ServicesSection />
       <WealthManagementSection />
       <SipCalculator />
       <EmiCalculator />

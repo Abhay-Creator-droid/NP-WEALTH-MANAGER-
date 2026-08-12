@@ -1,25 +1,35 @@
 import React from "react";
-import { ServicesSection } from "@/components/sections/ServicesSection";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
+import type { Metadata } from "next";
+import { ServicesPageContent } from "@/components/sections/ServicesPageContent";
 
-export const metadata = {
-  title: "Services & Solutions | NP Wealth Managers",
-  description: "Explore financial solutions across wealth management, mutual funds, home loans, personal loans, business loans, and real estate.",
+export const metadata: Metadata = {
+  title: "Our Services | NP Wealth Managers",
+  description:
+    "Explore wealth planning, investment management, insurance, tax planning, real estate advisory, business consulting, and personalized financial solutions from NP Wealth Managers.",
+  keywords: [
+    "wealth planning",
+    "investment management",
+    "financial advisory",
+    "tax planning",
+    "estate planning",
+    "real estate advisory",
+    "NP Wealth Managers",
+  ],
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "Our Services | NP Wealth Managers",
+    description:
+      "End-to-end financial solutions designed to protect, grow, and manage wealth with precision and care.",
+    url: "/services",
+  },
 };
 
 export default function ServicesPage() {
   return (
     <div className="pt-20">
-      <div className="bg-[#071A3D] text-white py-16 text-center border-b border-[#D4AF37]/30">
-        <h1 className="text-4xl sm:text-5xl font-black">Services & Solutions</h1>
-        <p className="text-slate-300 text-base max-w-xl mx-auto mt-3">
-          Comprehensive wealth management, investment planning, property, and lender options under one roof.
-        </p>
-      </div>
-      <ServicesSection />
-      <HowItWorks />
-      <FinalCtaSection />
+      <ServicesPageContent />
     </div>
   );
 }

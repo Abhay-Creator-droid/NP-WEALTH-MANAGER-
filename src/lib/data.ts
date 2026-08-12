@@ -9,6 +9,127 @@ export interface ServiceItem {
   targetAudience: string;
 }
 
+export type ServiceCatalogSection = "core" | "specialized" | "value-added";
+
+export interface ServiceCatalogItem {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+  section: ServiceCatalogSection;
+}
+
+export interface ServiceCatalogSectionConfig {
+  id: ServiceCatalogSection;
+  heading: string;
+  eyebrow: string;
+  gridClass: string;
+}
+
+export const SERVICE_CATALOG_SECTIONS: ServiceCatalogSectionConfig[] = [
+  {
+    id: "core",
+    heading: "Core Services",
+    eyebrow: "Foundation",
+    gridClass: "sm:grid-cols-2 xl:grid-cols-4",
+  },
+  {
+    id: "specialized",
+    heading: "Specialized Services",
+    eyebrow: "Expertise",
+    gridClass: "sm:grid-cols-2 lg:grid-cols-3",
+  },
+  {
+    id: "value-added",
+    heading: "Value-Added Services",
+    eyebrow: "Beyond Advisory",
+    gridClass: "sm:grid-cols-2 lg:grid-cols-3",
+  },
+];
+
+export const SERVICES_CATALOG: ServiceCatalogItem[] = [
+  {
+    id: "wealth-planning-advisory",
+    title: "Wealth Planning & Advisory",
+    description:
+      "Tailored strategies to help individuals, families, and businesses achieve long-term financial security.",
+    iconName: "Briefcase",
+    section: "core",
+  },
+  {
+    id: "investment-management",
+    title: "Investment Management",
+    description:
+      "Expert guidance across equity, debt, mutual funds, and alternative assets to maximize returns while managing risk.",
+    iconName: "TrendingUp",
+    section: "core",
+  },
+  {
+    id: "insurance-risk-solutions",
+    title: "Insurance & Risk Solutions",
+    description:
+      "Comprehensive coverage planning to safeguard against uncertainties and protect your financial future.",
+    iconName: "Shield",
+    section: "core",
+  },
+  {
+    id: "tax-estate-planning",
+    title: "Tax & Estate Planning",
+    description:
+      "Structured solutions for tax efficiency and smooth wealth transfer across generations.",
+    iconName: "Scale",
+    section: "core",
+  },
+  {
+    id: "real-estate-investment-advisory",
+    title: "Real Estate Investment Advisory",
+    description:
+      "Strategic collaborations with leading developers and groups to unlock property investment opportunities.",
+    iconName: "Building",
+    section: "specialized",
+  },
+  {
+    id: "business-loan-consulting",
+    title: "Business & Loan Consulting",
+    description:
+      "Support for entrepreneurs and enterprises in accessing capital, structuring loans, and managing financial growth.",
+    iconName: "Landmark",
+    section: "specialized",
+  },
+  {
+    id: "retirement-succession-planning",
+    title: "Retirement & Succession Planning",
+    description:
+      "Ensuring financial independence and seamless transition of wealth for future generations.",
+    iconName: "Users",
+    section: "specialized",
+  },
+  {
+    id: "portfolio-review-optimization",
+    title: "Portfolio Review & Optimization",
+    description: "Regular assessment of investments to align with evolving goals.",
+    iconName: "PieChart",
+    section: "value-added",
+  },
+  {
+    id: "financial-education-guidance",
+    title: "Financial Education & Guidance",
+    description: "Simplifying complex financial concepts for informed decision-making.",
+    iconName: "GraduationCap",
+    section: "value-added",
+  },
+  {
+    id: "client-centric-approach",
+    title: "Client-Centric Approach",
+    description: "Transparent, structured, and personalized solutions tailored to your aspirations.",
+    iconName: "HeartHandshake",
+    section: "value-added",
+  },
+];
+
+export const getServicesBySection = (section: ServiceCatalogSection) =>
+  SERVICES_CATALOG.filter((service) => service.section === section);
+
 export interface LoanProduct {
   id: string;
   title: string;
