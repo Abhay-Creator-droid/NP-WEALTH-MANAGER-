@@ -7,6 +7,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/common/WhatsAppButton";
 import { ConsultationModal } from "@/components/common/ConsultationModal";
+import { ScrollProgress } from "@/components/common/ScrollProgress";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -71,8 +72,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${plusJakartaSans.variable} font-sans bg-[#F7F9FC] text-[#0A162B] antialiased`}>
+      <body className={`${plusJakartaSans.variable} font-sans bg-[#0B0F19] text-white antialiased`}>
         <ConsultationProvider>
+          <ScrollProgress />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />

@@ -2,25 +2,25 @@
 
 @layer base {
   :root {
-    /* === PRIMARY BRAND: Crimson Red (matched to logo) === */
-    --red-darkest:  #4A0000;
-    --red-dark:     #6B1A1A;
-    --red-primary:  #7F1D1D;
-    --red-mid:      #9B1C1C;
-    --red-light:    #B91C1C;
+    /* === BRAND COLORS === */
+    --brand-dark:     #0B0F19; /* Deep charcoal dark for hero/footer */
+    --brand-navy:     #111827; /* Rich dark background */
+    --brand-card-dark:#1F2937; /* Card background in dark sections */
 
-    /* === GOLD ACCENT (matched to logo) === */
-    --gold-primary: #D4AF37;
-    --gold-light:   #F2D675;
-    --gold-dark:    #B89028;
+    /* === ACCENT COLORS === */
+    --gold-primary:   #D4AF37; /* Warm metallic gold */
+    --gold-light:     #F2D675; /* Bright gold highlight */
+    --gold-dark:      #B89028; /* Deep gold border accent */
 
-    /* === SURFACE & TEXT === */
-    --bg-surface:    #FDF8F0;
-    --bg-warm:       #FFF9F0;
-    --card-surface:  #FFFFFF;
-    --text-primary:  #1A0505;
-    --text-muted:    #6B3333;
-    --text-light:    #9A6060;
+    /* === LIGHT SECTION SURFACES === */
+    --bg-surface:      #FDF8F0; /* Soft warm cream main page background */
+    --bg-warm:         #FFF9F0; /* Light card warm off-white surface */
+    --card-surface:    #FFFFFF; /* Pure white card surface */
+
+    /* === TYPOGRAPHY COLORS === */
+    --text-primary:    #111827; /* Dark charcoal body text */
+    --text-muted:      #4B5563; /* Slate grey muted text */
+    --text-light:      #6B7280; /* Secondary text */
   }
 
   html {
@@ -36,19 +36,20 @@
 }
 
 /* ==========================================
-   BRAND UTILITY CLASSES
+   CUSTOM BRAND UTILITIES & GLASSMORPHISM
    ========================================== */
 
 /* Backgrounds */
-.bg-brand-primary   { background-color: #7F1D1D; }
-.bg-brand-dark      { background-color: #4A0000; }
-.bg-brand-mid       { background-color: #9B1C1C; }
-.bg-brand-light     { background-color: #B91C1C; }
+.bg-cream-surface  { background-color: #FDF8F0; }
+.bg-warm-surface   { background-color: #FFF9F0; }
+.bg-brand-dark     { background-color: #0B0F19; }
+.bg-brand-navy     { background-color: #111827; }
+.bg-brand-card     { background-color: #1F2937; }
 
 /* Text */
-.text-gold-primary  { color: #D4AF37; }
-.text-gold-light    { color: #F2D675; }
-.text-brand-red     { color: #9B1C1C; }
+.text-gold-primary { color: #D4AF37; }
+.text-gold-light   { color: #F2D675; }
+.text-brand-dark   { color: #0B0F19; }
 
 /* Borders */
 .border-gold-primary { border-color: #D4AF37; }
@@ -60,7 +61,7 @@
 }
 
 .bg-gold-subtle {
-  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(242,214,117,0.05) 100%);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(242, 214, 117, 0.05) 100%);
 }
 
 .text-gold-gradient {
@@ -70,16 +71,16 @@
 }
 
 .bg-brand-gradient {
-  background: linear-gradient(180deg, #4A0000 0%, #7F1D1D 50%, #9B1C1C 100%);
+  background: linear-gradient(180deg, #0B0F19 0%, #111827 50%, #1F2937 100%);
 }
 
-.bg-brand-gradient-diagonal {
-  background: linear-gradient(135deg, #4A0000 0%, #7F1D1D 60%, #B91C1C 100%);
+.bg-hero-gradient {
+  background: linear-gradient(135deg, #0B0F19 0%, #111827 60%, #1A2332 100%);
 }
 
-/* Glass / frosted effects */
+/* Glassmorphism */
 .glass-brand {
-  background: rgba(127, 29, 29, 0.88);
+  background: rgba(17, 24, 39, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(212, 175, 55, 0.25);
@@ -89,89 +90,59 @@
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(155, 28, 28, 0.08);
+  border: 1px solid rgba(17, 24, 39, 0.08);
 }
 
 /* Shadows */
-.shadow-gold-glow   { box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.30); }
-.shadow-brand-glow  { box-shadow: 0 20px 40px -15px rgba(127, 29, 29, 0.25); }
+.shadow-gold-glow {
+  box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.30);
+}
 
-/* Card hover lift */
-.shadow-card-hover { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.shadow-brand-glow {
+  box-shadow: 0 20px 40px -15px rgba(11, 15, 25, 0.40);
+}
+
+.shadow-card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .shadow-card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 35px -10px rgba(127, 29, 29, 0.14),
+  box-shadow: 0 20px 35px -10px rgba(17, 24, 39, 0.10),
               0 0 20px rgba(212, 175, 55, 0.18);
 }
 
-/* ==========================================
-   CUSTOM SCROLLBAR — Red & Gold
-   ========================================== */
-::-webkit-scrollbar        { width: 7px; }
-::-webkit-scrollbar-track  { background: #4A0000; }
-::-webkit-scrollbar-thumb  { background: #D4AF37; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #F2D675; }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
-/* ==========================================
-   ANIMATIONS
-   ========================================== */
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F2D675;
+}
+
+/* Animations */
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50%       { opacity: 0.85; transform: scale(1.06); }
-}
-.animate-pulse-glow { animation: pulseGlow 4s ease-in-out infinite; }
-
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-.animate-shimmer {
-  background: linear-gradient(90deg, #D4AF37 25%, #F2D675 50%, #D4AF37 75%);
-  background-size: 200% auto;
-  animation: shimmer 2.5s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%       { opacity: 0.75; transform: scale(1.05); }
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
 }
-.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
 
-/* Section divider gold line */
 .gold-divider {
   width: 60px;
   height: 3px;
   background: linear-gradient(90deg, #D4AF37, #F2D675);
   border-radius: 9999px;
-}
-
-/* Gold badge pill */
-.gold-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  color: #D4AF37;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* Section heading gradient accent */
-.section-title {
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  font-weight: 900;
-  color: #1A0505;
-  line-height: 1.15;
-}
-.section-title span {
-  background: linear-gradient(135deg, #9B1C1C, #B91C1C);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }

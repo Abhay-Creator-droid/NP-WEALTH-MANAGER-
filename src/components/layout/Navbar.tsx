@@ -3,61 +3,64 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronRight, ChevronDown, TrendingUp, Landmark, Building } from "lucide-react";
+import {
+  Menu,
+  X,
+  Phone,
+  ChevronDown,
+  Home,
+  FileCheck2,
+  RefreshCw,
+  Calculator,
+  Building,
+  Briefcase,
+  Users,
+  ShieldCheck,
+  Star,
+  Award,
+} from "lucide-react";
 import { COMPANY_CONFIG } from "@/lib/config";
 import { useConsultation } from "@/context/ConsultationContext";
 
 const SERVICES_DROPDOWN = [
-  {
-    label: "Investments",
-    href: "/investments",
-    icon: TrendingUp,
-    description: "SIP, Mutual Funds & Wealth Planning",
-  },
-  {
-    label: "Loans",
-    href: "/loans",
-    icon: Landmark,
-    description: "Home, Business & Personal Loans",
-  },
-  {
-    label: "Real Estate",
-    href: "/real-estate",
-    icon: Building,
-    description: "Residential, Commercial & Plots",
-  },
+  { label: "Home Loans", href: "#services", icon: Home, desc: "Buy, build or construct your home" },
+  { label: "Loan Against Property", href: "#services", icon: FileCheck2, desc: "Leverage existing property equity" },
+  { label: "Balance Transfer", href: "#services", icon: RefreshCw, desc: "Optimize interest rate & EMIs" },
+  { label: "Real Estate Advisory", href: "#services", icon: Building, desc: "Residential & commercial property" },
+  { label: "Wealth Management", href: "#services", icon: Briefcase, desc: "SIP & portfolio planning" },
 ];
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+
   const servicesRef = useRef<HTMLDivElement>(null);
-  const lastScrollY = useRef(0);
-  const pathname = usePathname();
   const { openConsultationModal } = useConsultation();
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 20);
+      setIsScrolled(window.scrollY > 30);
 
-      if (currentScrollY <= 20) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current + 5) {
-        setIsVisible(false);
-        setMobileMenuOpen(false);
-        setServicesOpen(false);
-      } else if (currentScrollY < lastScrollY.current - 5) {
-        setIsVisible(true);
+      // Section spy for active link highlight
+      const sections = ["hero", "services", "resources", "about", "contact"];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
       }
-
-      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -72,34 +75,39 @@ export const Navbar: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Services", href: "/services", hasDropdown: true },
-    { name: "Calculators", href: "/calculators" },
-    { name: "Resources", href: "/resources" },
-    { name: "Contact", href: "/contact" },
-  ];
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    setServicesOpen(false);
 
-  const isHomePage = pathname === "/";
+    if (id === "hero") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
 
-  const headerBg = isScrolled
-    ? "bg-brand-light shadow-xl py-2.5 border-b border-gold-primary/40"
-    : isHomePage
-      ? "bg-transparent py-4 border-b border-transparent"
-      : "bg-brand-primary py-4 border-b border-gold-primary/20";
+    const el = document.getElementById(id);
+    if (el) {
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
+  const navbarStyle = isScrolled
+    ? "bg-[#0B0F19]/90 backdrop-blur-md shadow-2xl py-3 border-b border-[#D4AF37]/30"
+    : "bg-transparent py-4 border-b border-white/10";
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ease-in-out ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      } ${headerBg}`}
-    >
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarStyle}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
-        {/* Brand Logo */}
-        <Link href="/" className="group flex min-w-0 shrink items-center gap-2 sm:gap-2.5 md:gap-3">
-          <div className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 md:h-12 md:w-12 rounded-xl overflow-hidden bg-white p-0.5 shadow-lg shadow-black/30 border-2 border-gold-primary transition-transform group-hover:scale-105">
+        {/* Left: Brand Logo & Title */}
+        <a
+          href="#hero"
+          onClick={(e) => scrollToSection(e, "hero")}
+          className="flex items-center gap-3 group cursor-pointer"
+        >
+          <div className="relative h-10 w-10 sm:h-11 sm:w-11 rounded-lg overflow-hidden bg-white p-0.5 shadow-md border-2 border-[#D4AF37] group-hover:scale-105 transition-transform shrink-0">
             <Image
               src={COMPANY_CONFIG.logoUrl}
               alt={COMPANY_CONFIG.name}
@@ -109,125 +117,142 @@ export const Navbar: React.FC = () => {
               unoptimized
             />
           </div>
-          <span className="inline-flex items-center whitespace-nowrap leading-none">
-            <span className="font-black text-sm tracking-[0.04em] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] sm:text-base md:text-lg lg:text-xl">
+          <div className="flex items-center gap-1.5">
+            <span className="font-black text-lg md:text-xl text-[#F2D675] tracking-wider leading-none">
               NP
             </span>
-            <span className="ml-1 font-semibold text-xs tracking-[0.02em] text-gold-light drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] sm:ml-1.5 sm:text-sm md:text-base lg:text-lg">
+            <span className="font-bold text-base md:text-lg text-white tracking-wide leading-none">
               Wealth Managers
             </span>
-          </span>
-        </Link>
+          </div>
+        </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-          {navLinks.map((link) =>
-            link.hasDropdown ? (
-              /* Services with dropdown */
-              <div key={link.name} className="relative" ref={servicesRef}>
-                <button
-                  onClick={() => setServicesOpen(!servicesOpen)}
-                  onMouseEnter={() => setServicesOpen(true)}
-                  className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-all duration-200 ${
-                      pathname.startsWith("/services") ||
-                      pathname === "/investments" ||
-                      pathname === "/loans" ||
-                      pathname === "/real-estate"
-                        ? "text-gold-light bg-white/15 border-b-2 border-gold-primary"
-                        : "text-white hover:text-gold-light hover:bg-white/15"
-                    }`}
-                >
-                  <span>Services</span>
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
+        {/* Center: Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-2 xl:gap-4">
+          {/* Home */}
+          <a
+            href="#hero"
+            onClick={(e) => scrollToSection(e, "hero")}
+            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
+              activeSection === "hero"
+                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+            }`}
+          >
+            Home
+          </a>
 
-                {/* Dropdown Panel */}
-                {servicesOpen && (
-                  <div
-                    onMouseLeave={() => setServicesOpen(false)}
-                    className="absolute top-full left-0 mt-2 w-72 bg-brand-primary border border-gold-glow rounded-2xl shadow-2xl shadow-black/40 overflow-hidden z-50"
-                  >
-                    {/* Dropdown Header */}
-                    <div className="px-4 py-3 border-b border-white/10 bg-brand-dark">
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold-light">
-                        Explore Our Solutions
-                      </span>
-                    </div>
-
-                    {/* Sub-items: Investments, Loans, Real Estate */}
-                    {SERVICES_DROPDOWN.map((item) => {
-                      const Icon = item.icon;
-                      const isActive = pathname === item.href;
-                      return (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          onClick={() => setServicesOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-3.5 hover:bg-white/10 transition-colors border-b border-white/5 last:border-0 group ${
-                            isActive ? "bg-white/15" : ""
-                          }`}
-                        >
-                          <div className="w-9 h-9 rounded-xl bg-gold-subtle border border-gold-glow flex items-center justify-center group-hover:bg-gold-primary/30 transition-colors shrink-0">
-                            <Icon className="w-4.5 h-4.5 text-gold-light w-5 h-5" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-bold text-white group-hover:text-gold-light transition-colors">
-                              {item.label}
-                            </p>
-                            <p className="text-[11px] text-white/60 font-medium leading-tight">
-                              {item.description}
-                            </p>
-                          </div>
-                          {isActive && (
-                            <div className="ml-auto w-1.5 h-1.5 rounded-full bg-gold-primary" />
-                          )}
-                        </Link>
-                      );
-                    })}
-
-                    {/* View All Services Link */}
-                    <Link
-                      href="/services"
-                      onClick={() => setServicesOpen(false)}
-                      className="flex items-center justify-between px-4 py-3 bg-brand-dark hover:brightness-95 transition-colors text-xs font-bold text-gold-light"
-                    >
-                      <span>View All Services</span>
-                      <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                )}
-              </div>
-            ) : (
-              /* Regular nav links */
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-all duration-200 ${
-                  pathname === link.href
-                    ? "text-gold-light bg-white/15 border-b-2 border-gold-primary"
-                    : "text-white hover:text-gold-light hover:bg-white/15"
+          {/* Services Dropdown */}
+          <div className="relative" ref={servicesRef}>
+            <button
+              onClick={() => setServicesOpen(!servicesOpen)}
+              onMouseEnter={() => setServicesOpen(true)}
+              className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                activeSection === "services"
+                  ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                  : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+              }`}
+            >
+              <span>Services</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  servicesOpen ? "rotate-180 text-[#F2D675]" : ""
                 }`}
+              />
+            </button>
+
+            {servicesOpen && (
+              <div
+                onMouseLeave={() => setServicesOpen(false)}
+                className="absolute top-full left-0 mt-2 w-72 bg-[#111827] border border-[#D4AF37]/40 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden z-50 animate-fade-in-up"
               >
-                {link.name}
-              </Link>
-            )
-          )}
+                <div className="px-4 py-2.5 border-b border-white/10 bg-[#0B0F19]">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#F2D675]">
+                    Financial & Loan Services
+                  </span>
+                </div>
+                <div className="p-2 space-y-1">
+                  {SERVICES_DROPDOWN.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        onClick={(e) => scrollToSection(e, "services")}
+                        className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer"
+                      >
+                        <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0 group-hover:bg-[#D4AF37] transition-colors">
+                          <Icon className="w-3.5 h-3.5 text-[#F2D675] group-hover:text-[#0B0F19]" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-white group-hover:text-[#F2D675] transition-colors">
+                            {item.label}
+                          </p>
+                          <p className="text-[10px] text-gray-400 font-normal leading-tight">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Resources */}
+          <a
+            href="#resources"
+            onClick={(e) => scrollToSection(e, "resources")}
+            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
+              activeSection === "resources"
+                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+            }`}
+          >
+            Resources
+          </a>
+
+          {/* About Us */}
+          <a
+            href="#about"
+            onClick={(e) => scrollToSection(e, "about")}
+            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
+              activeSection === "about"
+                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+            }`}
+          >
+            About Us
+          </a>
+
+          {/* Contact */}
+          <a
+            href="#contact"
+            onClick={(e) => scrollToSection(e, "contact")}
+            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
+              activeSection === "contact"
+                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+            }`}
+          >
+            Contact
+          </a>
         </nav>
 
-        {/* Desktop Right Actions */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Right: Phone & Book Consultation CTA */}
+        <div className="hidden lg:flex items-center gap-5">
           <a
             href={`tel:${COMPANY_CONFIG.phoneRaw}`}
-            className="flex items-center gap-2 text-xs font-bold text-white hover:text-gold-light transition-colors drop-shadow-sm"
+            className="flex items-center gap-2 text-xs font-semibold text-gray-200 hover:text-[#F2D675] transition-colors"
           >
-            <Phone className="w-3.5 h-3.5 text-gold-primary" />
+            <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
             <span>{COMPANY_CONFIG.phoneDisplay}</span>
           </a>
+
           <button
-            onClick={() => openConsultationModal("Wealth Management")}
-            className="px-5 py-2.5 bg-gold-gradient text-brand-red font-black text-xs xl:text-sm rounded-xl shadow-lg shadow-gold-glow hover:brightness-110 active:scale-95 transition-all"
+            onClick={() => openConsultationModal("General Consultation")}
+            className="px-5 py-2.5 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all cursor-pointer"
           >
             Book Consultation
           </button>
@@ -236,107 +261,74 @@ export const Navbar: React.FC = () => {
         {/* Mobile Controls */}
         <div className="flex lg:hidden items-center gap-2">
           <button
-            onClick={() => openConsultationModal("Wealth Management")}
-            className="px-3 py-1.5 bg-gold-primary text-brand-red font-black text-xs rounded-lg shadow"
+            onClick={() => openConsultationModal("General Consultation")}
+            className="px-3 py-1.5 bg-[#D4AF37] text-[#4A1515] font-black text-xs rounded-lg shadow"
           >
             Consult
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-white hover:bg-white/15 transition-colors focus:outline-none"
-            aria-label="Toggle Navigation Menu"
+            className="p-2 rounded-xl text-white hover:bg-white/10 transition-colors focus:outline-none"
+            aria-label="Toggle Mobile Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[70px] bg-brand-primary border-b-2 border-gold-glow shadow-2xl px-5 py-5">
+        <div className="lg:hidden fixed inset-x-0 top-[70px] bg-[#0B0F19] border-b-2 border-[#D4AF37]/40 shadow-2xl px-5 py-6 space-y-3 z-50">
+          <a
+            href="#hero"
+            onClick={(e) => scrollToSection(e, "hero")}
+            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Home
+          </a>
+          <a
+            href="#services"
+            onClick={(e) => scrollToSection(e, "services")}
+            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Services
+          </a>
+          <a
+            href="#resources"
+            onClick={(e) => scrollToSection(e, "resources")}
+            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Resources
+          </a>
+          <a
+            href="#about"
+            onClick={(e) => scrollToSection(e, "about")}
+            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
+          >
+            About Us
+          </a>
+          <a
+            href="#contact"
+            onClick={(e) => scrollToSection(e, "contact")}
+            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Contact
+          </a>
 
-          {/* Main Links */}
-          <div className="flex flex-col space-y-1.5">
-            {[
-              { name: "Home", href: "/" },
-              { name: "About", href: "/about" },
-              { name: "Services", href: "/services" },
-            ].map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between ${
-                  pathname === link.href
-                    ? "bg-white/20 text-gold-light border-l-4 border-gold-primary"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                <span>{link.name}</span>
-                <ChevronRight className="w-4 h-4 text-white/50" />
-              </Link>
-            ))}
-
-            {/* Services sub-items */}
-            <div className="ml-4 border-l-2 border-[#D4AF37]/30 pl-3 space-y-1">
-              {SERVICES_DROPDOWN.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`px-3 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-3 ${
-                        pathname === item.href
-                          ? "bg-white/20 text-gold-light"
-                          : "text-white/80 hover:bg-white/10 hover:text-gold-light"
-                      }`}
-                  >
-                      <Icon className="w-4 h-4 text-gold-primary shrink-0" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {[
-              { name: "Calculators", href: "/calculators" },
-              { name: "Resources", href: "/resources" },
-              { name: "Contact", href: "/contact" },
-            ].map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between ${
-                  pathname === link.href
-                    ? "bg-white/20 text-[#F2D675] border-l-4 border-[#D4AF37]"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                <span>{link.name}</span>
-                <ChevronRight className="w-4 h-4 text-white/50" />
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Bottom Actions */}
-          <div className="mt-5 pt-5 border-t border-white/20 space-y-3">
+          <div className="pt-4 border-t border-white/10 space-y-3">
             <a
               href={`tel:${COMPANY_CONFIG.phoneRaw}`}
-              className="flex items-center gap-3 text-sm font-semibold text-white/80"
+              className="flex items-center gap-3 text-sm font-semibold text-gray-200"
             >
-              <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center">
-                <Phone className="w-4 h-4 text-gold-primary" />
-              </div>
+              <Phone className="w-4 h-4 text-[#D4AF37]" />
               <span>{COMPANY_CONFIG.phoneDisplay}</span>
             </a>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                openConsultationModal("Wealth Management");
+                openConsultationModal("General Consultation");
               }}
-              className="w-full py-3.5 bg-gold-gradient text-brand-red font-black text-sm rounded-xl shadow-lg"
+              className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-[#F2D675] text-[#4A1515] font-black text-sm rounded-xl shadow-lg"
             >
               Book Consultation
             </button>

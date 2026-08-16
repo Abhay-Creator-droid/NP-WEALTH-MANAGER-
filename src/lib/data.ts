@@ -29,19 +29,19 @@ export interface ServiceCatalogSectionConfig {
 export const SERVICE_CATALOG_SECTIONS: ServiceCatalogSectionConfig[] = [
   {
     id: "core",
-    heading: "Core Services",
+    heading: "Core Advisory Solutions",
     eyebrow: "Foundation",
     gridClass: "sm:grid-cols-2 xl:grid-cols-4",
   },
   {
     id: "specialized",
-    heading: "Specialized Services",
+    heading: "Specialized Financing & Property",
     eyebrow: "Expertise",
     gridClass: "sm:grid-cols-2 lg:grid-cols-3",
   },
   {
     id: "value-added",
-    heading: "Value-Added Services",
+    heading: "Value-Added Client Services",
     eyebrow: "Beyond Advisory",
     gridClass: "sm:grid-cols-2 lg:grid-cols-3",
   },
@@ -49,80 +49,66 @@ export const SERVICE_CATALOG_SECTIONS: ServiceCatalogSectionConfig[] = [
 
 export const SERVICES_CATALOG: ServiceCatalogItem[] = [
   {
-    id: "wealth-planning-advisory",
-    title: "Wealth Planning & Advisory",
-    description:
-      "Tailored strategies to help individuals, families, and businesses achieve long-term financial security.",
-    iconName: "Briefcase",
+    id: "home-loan-solutions",
+    title: "Home Loan Solutions",
+    description: "Purchase, construct, build, or renovate your dream residential property with competitive lender options.",
+    iconName: "Home",
     section: "core",
   },
   {
-    id: "investment-management",
-    title: "Investment Management",
-    description:
-      "Expert guidance across equity, debt, mutual funds, and alternative assets to maximize returns while managing risk.",
-    iconName: "TrendingUp",
+    id: "loan-against-property",
+    title: "Loan Against Property",
+    description: "Unlock high-ticket capital leverage using your existing residential or commercial property equity.",
+    iconName: "FileCheck2",
     section: "core",
   },
   {
-    id: "insurance-risk-solutions",
-    title: "Insurance & Risk Solutions",
-    description:
-      "Comprehensive coverage planning to safeguard against uncertainties and protect your financial future.",
-    iconName: "Shield",
-    section: "core",
-  },
-  {
-    id: "tax-estate-planning",
-    title: "Tax & Estate Planning",
-    description:
-      "Structured solutions for tax efficiency and smooth wealth transfer across generations.",
-    iconName: "Scale",
+    id: "balance-transfer-topup",
+    title: "Balance Transfer & Top-Up",
+    description: "Optimize existing home loans with lower interest rate structures and seamless lender balance transfer.",
+    iconName: "ArrowRightLeft",
     section: "core",
   },
   {
     id: "real-estate-investment-advisory",
-    title: "Real Estate Investment Advisory",
-    description:
-      "Strategic collaborations with leading developers and groups to unlock property investment opportunities.",
+    title: "Real Estate Advisory",
+    description: "Curated residential, commercial, industrial, and mixed-use property advisory across prime corridors.",
     iconName: "Building",
-    section: "specialized",
+    section: "core",
   },
   {
     id: "business-loan-consulting",
-    title: "Business & Loan Consulting",
-    description:
-      "Support for entrepreneurs and enterprises in accessing capital, structuring loans, and managing financial growth.",
+    title: "Business & Commercial Loans",
+    description: "Capital access, working capital assistance, and growth credit structuring for eligible MSMEs.",
     iconName: "Landmark",
     section: "specialized",
   },
   {
-    id: "retirement-succession-planning",
-    title: "Retirement & Succession Planning",
-    description:
-      "Ensuring financial independence and seamless transition of wealth for future generations.",
-    iconName: "Users",
+    id: "wealth-planning-advisory",
+    title: "Wealth & Investment Management",
+    description: "Disciplined capital allocation across SIPs, mutual funds, and long-term financial milestone plans.",
+    iconName: "Briefcase",
     section: "specialized",
   },
   {
+    id: "easy-documentation-assistance",
+    title: "Easy Documentation & Support",
+    description: "End-to-end guidance through paperwork, legal title checks, and bank verification steps.",
+    iconName: "ShieldCheck",
+    section: "specialized",
+  },
+  {
+    id: "emi-calculator-tool",
+    title: "Interactive EMI Calculator",
+    description: "Instant amortization, interest calculations, and payment schedule breakdown for financial planning.",
+    iconName: "Calculator",
+    section: "value-added",
+  },
+  {
     id: "portfolio-review-optimization",
-    title: "Portfolio Review & Optimization",
-    description: "Regular assessment of investments to align with evolving goals.",
+    title: "Portfolio & Loan Review",
+    description: "Periodic assessment of financing terms and investment holdings to align with evolving needs.",
     iconName: "PieChart",
-    section: "value-added",
-  },
-  {
-    id: "financial-education-guidance",
-    title: "Financial Education & Guidance",
-    description: "Simplifying complex financial concepts for informed decision-making.",
-    iconName: "GraduationCap",
-    section: "value-added",
-  },
-  {
-    id: "client-centric-approach",
-    title: "Client-Centric Approach",
-    description: "Transparent, structured, and personalized solutions tailored to your aspirations.",
-    iconName: "HeartHandshake",
     section: "value-added",
   },
 ];
@@ -130,6 +116,435 @@ export const SERVICES_CATALOG: ServiceCatalogItem[] = [
 export const getServicesBySection = (section: ServiceCatalogSection) =>
   SERVICES_CATALOG.filter((service) => service.section === section);
 
+// ----------------------------------------------------
+// 1. EXPERTISE SERVICES (6 Key Cards for Reference Site)
+// ----------------------------------------------------
+export interface ExpertiseItem {
+  id: string;
+  title: string;
+  iconName: string;
+  description: string;
+  badge?: string;
+  link: string;
+}
+
+export const EXPERTISE_SERVICES: ExpertiseItem[] = [
+  {
+    id: "home-loans",
+    title: "Home Loan Solutions",
+    iconName: "Home",
+    description: "Buy, build, construct, or renovate your dream home with access to prime lender options and tailored terms.",
+    badge: "Popular",
+    link: "/loans",
+  },
+  {
+    id: "lap",
+    title: "Loan Against Property",
+    iconName: "FileText",
+    description: "Unlock significant capital from the residential or commercial property equity you already own.",
+    link: "/loans",
+  },
+  {
+    id: "balance-transfer",
+    title: "Balance Transfer",
+    iconName: "RefreshCw",
+    description: "Help clients reduce monthly EMIs and optimize interest rate structures on existing home loans.",
+    link: "/loans",
+  },
+  {
+    id: "easy-docs",
+    title: "Easy Documentation",
+    iconName: "CheckSquare",
+    description: "Simplified, step-by-step paper submission and guided assistance through financial verification.",
+    link: "/contact",
+  },
+  {
+    id: "competitive-rates",
+    title: "Competitive Interest Rates",
+    iconName: "TrendingUp",
+    description: "Access suitable lender financing choices across leading banks and NBFC partner networks.",
+    link: "/loans",
+  },
+  {
+    id: "expert-guidance",
+    title: "Expert Guidance",
+    iconName: "UserCheck",
+    description: "End-to-end advisory from initial eligibility evaluation to final loan sanction and disbursement.",
+    link: "/about",
+  },
+];
+
+// ----------------------------------------------------
+// 2. WHY CHOOSE US PILLARS (6 Cards Grid)
+// ----------------------------------------------------
+export interface WhyChoosePillar {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+}
+
+export const WHY_CHOOSE_US_PILLARS: WhyChoosePillar[] = [
+  {
+    id: "trusted-advisors",
+    title: "Trusted Advisors",
+    description: "Unbiased, client-centric guidance backed by over a decade of financial and real-asset expertise.",
+    iconName: "Shield",
+  },
+  {
+    id: "personalized-solutions",
+    title: "Personalized Solutions",
+    description: "Financial and loan structures customized to match individual cash-flow needs and long-term goals.",
+    iconName: "Sliders",
+  },
+  {
+    id: "quick-approval",
+    title: "Quick Approval Process",
+    description: "Streamlined documentation filing and dedicated support to minimize lender processing times.",
+    iconName: "Zap",
+  },
+  {
+    id: "wide-network",
+    title: "Wide Partner Network",
+    description: "Strong relationships across 25+ leading banks, NBFCs, and top Grade-A real estate developers.",
+    iconName: "Grid",
+  },
+  {
+    id: "transparent-process",
+    title: "Transparent Process",
+    description: "Clear communication with zero hidden terms, transparent disclosures, and zero ambiguity.",
+    iconName: "Eye",
+  },
+  {
+    id: "ongoing-support",
+    title: "Ongoing Support",
+    description: "Long-term relationship management focused on ongoing portfolio alignment and financial care.",
+    iconName: "Clock",
+  },
+];
+
+// ----------------------------------------------------
+// 3. TWO CORE BUSINESS AREAS (Loans vs Real Assets)
+// ----------------------------------------------------
+export const TWO_CORE_AREAS = [
+  {
+    id: "loans",
+    category: "FINANCING SOLUTIONS",
+    title: "LOANS & MORTGAGE",
+    subtitle: "Structured borrowing tailored to your aspirations",
+    items: [
+      "Home Loans (Buy, Build, Construct, Renovate)",
+      "Loan Against Property (Residential & Commercial)",
+      "Home Loan Balance Transfer & Rate Optimization",
+      "Business & Retail Commercial Credit Facilities",
+    ],
+    ctaText: "Explore Loan Solutions",
+    ctaLink: "/loans",
+    accentColor: "from-[#D4AF37] to-[#F2D675]",
+  },
+  {
+    id: "real-assets",
+    category: "PROPERTY ADVISORY",
+    title: "REAL ASSETS & PROPERTY",
+    subtitle: "Curated real estate investment and asset guidance",
+    items: [
+      "Residential Properties & Luxury Apartments",
+      "Grade-A Commercial Office & Retail Hubs",
+      "Industrial Parks & Warehousing Land Parcels",
+      "Mixed-Use Developments & Real Estate Investment",
+    ],
+    ctaText: "Explore Real Assets",
+    ctaLink: "/real-assets",
+    accentColor: "from-[#111827] to-[#1F2937]",
+  },
+];
+
+// ----------------------------------------------------
+// 4. HOW WE WORK (4 Steps)
+// ----------------------------------------------------
+export const HOW_WE_WORK_STEPS = [
+  {
+    step: "01",
+    title: "Consult",
+    description: "Share your financial goals, property vision, or credit requirements in an in-depth advisory session.",
+  },
+  {
+    step: "02",
+    title: "Structure",
+    description: "We evaluate eligibility, compare lender products, and structure a custom solution suited to your needs.",
+  },
+  {
+    step: "03",
+    title: "Deploy",
+    description: "Seamless execution through guided documentation, legal checks, and fast-track application filing.",
+  },
+  {
+    step: "04",
+    title: "Review",
+    description: "Ongoing relationship management and periodic reviews to ensure continuous financial alignment.",
+  },
+];
+
+// ----------------------------------------------------
+// 5. STATS / TRACK RECORD (With Disclaimers)
+// ----------------------------------------------------
+export const STATS_METRICS = [
+  {
+    value: "12+",
+    label: "Years of Advisory Experience",
+    subtext: "Delivering disciplined financial & property solutions",
+  },
+  {
+    value: "1,800+",
+    label: "Client Mandates Assisted",
+    subtext: "Families & businesses guided across India",
+  },
+  {
+    value: "25+",
+    label: "Bank & NBFC Relationships",
+    subtext: "Access to top lending institutions nationwide",
+  },
+  {
+    value: "₹500Cr+",
+    label: "Facilitated Value",
+    subtext: "Cumulative loan & asset transactions advised",
+  },
+];
+
+export const STATS_DISCLAIMER = "* Figures shown above are indicative representations of cumulative team experience and network relationships across partner institutions. Approvals and financial outcomes are subject to individual eligibility and lender evaluation.";
+
+// ----------------------------------------------------
+// 6. LEADERSHIP TEAM (Corporate Cards)
+// ----------------------------------------------------
+export interface LeadershipMember {
+  id: string;
+  name: string;
+  designation: string;
+  experience: string;
+  bio: string;
+  photoUrl: string;
+  linkedinUrl?: string;
+}
+
+export const LEADERSHIP_TEAM: LeadershipMember[] = [
+  {
+    id: "leader-1",
+    name: "N. P. Singh",
+    designation: "Founder & Managing Director",
+    experience: "15+ Years Industry Leadership",
+    bio: "Over 15 years of expertise in wealth management, home loan syndication, and strategic real estate advisory across major Indian markets.",
+    photoUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
+    linkedinUrl: "https://linkedin.com",
+  },
+  {
+    id: "leader-2",
+    name: "P. Pratap",
+    designation: "Director - Lending & Mortgage Desk",
+    experience: "12+ Years Banking & Finance Focus",
+    bio: "Specializes in home loan balance transfers, loan against property, and credit underwriting alignment with top Indian banking partners.",
+    photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
+    linkedinUrl: "https://linkedin.com",
+  },
+  {
+    id: "leader-3",
+    name: "Anand Sharma",
+    designation: "Head - Real Estate & Assets",
+    experience: "10+ Years Property Advisory",
+    bio: "Leads residential and commercial property advisory, conducting structural due-diligence and strategic site evaluations.",
+    photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop",
+    linkedinUrl: "https://linkedin.com",
+  },
+];
+
+// ----------------------------------------------------
+// 7. CLIENT TESTIMONIALS
+// ----------------------------------------------------
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  role: string;
+  service: string;
+  location: string;
+  quote: string;
+  rating: number;
+}
+
+export const TESTIMONIALS_LIST: TestimonialItem[] = [
+  {
+    id: "test-1",
+    name: "Rajesh & Meenakshi Sharma",
+    role: "IT Director & Business Owner",
+    service: "Home Loan & Real Estate Advisory",
+    location: "Noida, UP",
+    quote: "NP Wealth Managers guided us through our home loan sanction smoothly. They helped us compare rates across 4 banks and secured terms we couldn't get on our own.",
+    rating: 5,
+  },
+  {
+    id: "test-2",
+    name: "Vikas Malhotra",
+    role: "MSME Founder",
+    service: "Loan Against Property",
+    location: "Delhi NCR",
+    quote: "When expanding our manufacturing unit, we needed liquidity quickly. Their team structured a Loan Against Property with minimal hassle and total clarity.",
+    rating: 5,
+  },
+  {
+    id: "test-3",
+    name: "Dr. Ananya Roy",
+    role: "Senior Healthcare Professional",
+    service: "Home Loan Balance Transfer",
+    location: "Gurugram",
+    quote: "They evaluated my existing home loan interest rate and successfully completed a balance transfer that reduced my monthly EMI significantly.",
+    rating: 5,
+  },
+];
+
+// ----------------------------------------------------
+// 8. PARTNER BANKS & NBFCS
+// ----------------------------------------------------
+export interface PartnerLogo {
+  id: string;
+  name: string;
+  category: "Bank" | "NBFC" | "Developer";
+}
+
+export const PARTNERS_LIST: PartnerLogo[] = [
+  { id: "p1", name: "HDFC Bank", category: "Bank" },
+  { id: "p2", name: "ICICI Bank", category: "Bank" },
+  { id: "p3", name: "SBI Home Loans", category: "Bank" },
+  { id: "p4", name: "Axis Bank", category: "Bank" },
+  { id: "p5", name: "Kotak Mahindra Bank", category: "Bank" },
+  { id: "p6", name: "Bajaj Housing Finance", category: "NBFC" },
+  { id: "p7", name: "PNB Housing", category: "NBFC" },
+  { id: "p8", name: "Tata Capital", category: "NBFC" },
+];
+
+// ----------------------------------------------------
+// 9. INSIGHTS / BLOG ARTICLES
+// ----------------------------------------------------
+export interface ResourceArticle {
+  id: string;
+  slug: string;
+  category: "Loans" | "Real Estate" | "Wealth" | "Finance" | "Investment";
+  title: string;
+  shortDescription: string;
+  readTime: string;
+  date: string;
+  content: string[];
+  featured?: boolean;
+}
+
+export const RESOURCE_ARTICLES: ResourceArticle[] = [
+  {
+    id: "art-1",
+    slug: "understanding-home-loan-balance-transfers",
+    category: "Loans",
+    title: "Understanding Home Loan Balance Transfers in 2026",
+    shortDescription: "A practical guide to transferring your existing home loan for lower interest rates, reduced EMIs, and top-up capital options.",
+    readTime: "5 min read",
+    date: "August 2026",
+    featured: true,
+    content: [
+      "A Home Loan Balance Transfer allows existing borrowers to shift their outstanding principal to another lender offering lower interest rates or better terms.",
+      "When Should You Consider It? If the interest rate differential is at least 0.50% to 1.00%, and you still have more than 7-10 years remaining on your loan tenure.",
+      "Key Benefits: Lower monthly EMIs, reduced overall interest burden, and the potential to unlock a Top-Up loan facility for extra liquidity.",
+      "Disclaimer: Processing fees and legal evaluation charges apply during balance transfer.",
+    ],
+  },
+  {
+    id: "art-2",
+    slug: "key-factors-in-loan-against-property-eligibility",
+    category: "Loans",
+    title: "Key Factors That Influence Loan Against Property (LAP)",
+    shortDescription: "How lenders evaluate property value, title clarity, applicant income, and FOIR ratios for high-ticket mortgage financing.",
+    readTime: "6 min read",
+    date: "August 2026",
+    content: [
+      "Loan Against Property (LAP) is a secured credit facility that allows asset owners to monetize residential or commercial real estate equity.",
+      "1. Property Valuation & LTV: Lenders typically sanction 50% to 70% of the market value of the property based on independent valuation.",
+      "2. Clear Property Title: Freehold properties with unencumbered legal titles and approved building plans qualify for smoother sanctions.",
+      "3. Income & Repayment Ability: Audited ITRs, current bank statements, and clean CIBIL scores determine maximum loan eligibility.",
+      "Disclaimer: Loan approval remains subject to lender underwriting criteria.",
+    ],
+  },
+  {
+    id: "art-3",
+    slug: "real-estate-due-diligence-checklist-for-buyers",
+    category: "Real Estate",
+    title: "Essential Real Estate Due-Diligence Checklist for Buyers",
+    shortDescription: "Crucial steps for verifying clear land titles, municipal approvals, RERA registrations, and developer track records.",
+    readTime: "7 min read",
+    date: "July 2026",
+    content: [
+      "Acquiring real estate requires systematic legal and structural verification to safeguard your investment capital.",
+      "Key Verification Steps:",
+      "• RERA Registration Check: Verify project details on the state RERA portal.",
+      "• Title Deed Search: Inspect 30-year title search reports from legal counsel.",
+      "• Approved Layout Plans: Ensure municipal sanction for floor plans and occupancy certificates.",
+      "Disclaimer: Always consult legal and property advisors prior to signing binding agreements.",
+    ],
+  },
+  {
+    id: "art-4",
+    slug: "sip-vs-lump-sum-wealth-creation-guide",
+    category: "Investment",
+    title: "SIP vs Lump Sum: Structuring Your Investment Portfolio",
+    shortDescription: "Comparing systematic monthly allocations with lump sum investments across market cycles for disciplined capital growth.",
+    readTime: "4 min read",
+    date: "July 2026",
+    content: [
+      "Systematic Investment Plans (SIPs) encourage rupee-cost averaging while lump-sum allocations suit capital deployments during market corrections.",
+      "Combining Both Approaches: Long-term wealth planning often combines regular SIPs with tactical lump-sum allocations into mutual funds.",
+      "Disclaimer: Mutual fund investments are subject to market risks. Read scheme documents carefully.",
+    ],
+  },
+];
+
+// ----------------------------------------------------
+// 10. CAREERS & CULTURE DATA
+// ----------------------------------------------------
+export interface CareerRole {
+  id: string;
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description: string;
+  requirements: string[];
+}
+
+export const CAREERS_ROLES: CareerRole[] = [
+  {
+    id: "c-1",
+    title: "Senior Loan & Mortgage Specialist",
+    department: "Lending Solutions",
+    location: "Noida / Delhi NCR",
+    type: "Full-Time",
+    description: "Drive home loan and loan against property advisory, working directly with client applicants and partner bank underwriting teams.",
+    requirements: [
+      "3-5 years of experience in retail home loans, LAP, or banking syndication",
+      "Strong understanding of CIBIL ratios, FOIR, and credit underwriting",
+      "Excellent client communication and negotiation skills",
+    ],
+  },
+  {
+    id: "c-2",
+    title: "Real Estate Investment Advisor",
+    department: "Real Assets Desk",
+    location: "Noida / NCR",
+    type: "Full-Time",
+    description: "Guide clients through residential and commercial real estate portfolio acquisition, site visits, and property due diligence.",
+    requirements: [
+      "2-4 years in residential/commercial real estate advisory",
+      "Knowledge of NCR micro-markets, developer projects, and RERA terms",
+      "Proven client consultation track record",
+    ],
+  },
+];
+
+// ----------------------------------------------------
+// PRESERVED EXPORTS FOR COMPATIBILITY
+// ----------------------------------------------------
 export interface LoanProduct {
   id: string;
   title: string;
@@ -160,185 +575,72 @@ export interface TeamPlaceholder {
   experienceLevel: string;
 }
 
-export interface ResourceArticle {
-  id: string;
-  slug: string;
-  category: "Investment" | "Loans" | "Real Estate" | "Financial Planning";
-  title: string;
-  shortDescription: string;
-  readTime: string;
-  date: string;
-  content: string[];
-}
-
 export const SERVICES_DATA: ServiceItem[] = [
   {
-    id: "wealth-management",
-    title: "Wealth Management",
-    iconName: "Briefcase",
-    category: "wealth",
-    shortDescription: "Structured guidance for your long-term financial goals.",
-    fullDescription: "Our wealth management service focuses on understanding your family's overall financial profile, risk preferences, and long-term liquidity needs to help build a structured asset allocation strategy.",
-    keyFeatures: [
-      "Personalized Asset Allocation Planning",
-      "Periodic Strategy Review & Rebalancing",
-      "Goal-based Wealth Preservation",
-      "Risk Profiling & Diversification Analysis",
-    ],
-    targetAudience: "High-Net-Worth Individuals, Business Owners, & Working Professionals",
-  },
-  {
-    id: "sip-mutual-funds",
-    title: "SIP & Mutual Funds",
-    iconName: "TrendingUp",
-    category: "investments",
-    shortDescription: "Explore investment options aligned with your goals and risk profile.",
-    fullDescription: "Systematic Investment Plans (SIPs) provide a disciplined mechanism for exploring equity and debt mutual funds based on individual financial horizons.",
-    keyFeatures: [
-      "Rupee Cost Averaging Insights",
-      "Equity, Hybrid & Debt Mutual Fund Exploration",
-      "Tax-saving ELSS Options Analysis",
-      "Goal-driven Investment Horizons",
-    ],
-    targetAudience: "Salaried Professionals & Long-term Investors",
-  },
-  {
-    id: "financial-planning",
-    title: "Financial Planning",
-    iconName: "Target",
-    category: "wealth",
-    shortDescription: "Plan for important milestones with a structured financial approach.",
-    fullDescription: "Comprehensive financial planning evaluates life milestones—such as retirement planning, children's higher education, emergency liquidity, and capital protection.",
-    keyFeatures: [
-      "Milestone-based Capital Allocation",
-      "Emergency Fund Liquidity Assessment",
-      "Retirement Horizon Structuring",
-      "Risk Management Review",
-    ],
-    targetAudience: "Families, Mid-Career Professionals & Pre-retirees",
-  },
-  {
     id: "home-loans",
-    title: "Home Loans",
+    title: "Home Loans Solutions",
     iconName: "Home",
     category: "loans",
-    shortDescription: "Explore suitable home financing options based on eligibility.",
-    fullDescription: "Assistance in navigating property purchasing options, home balance transfers, and top-up loan options across multiple repute lenders.",
+    shortDescription: "Purchase, construct, build, or renovate your dream residential property.",
+    fullDescription: "End-to-end guidance for home purchase loans, plot construction, home expansion, and balance transfer across top banks.",
     keyFeatures: [
-      "Balance Transfer Evaluation",
-      "Flexible Tenure Structure Assessment",
-      "Prudent Loan-to-Value (LTV) Options",
-      "Multi-Lender Documentation Support",
+      "Competitive Interest Rates Across Partner Banks",
+      "Balance Transfer & Rate Optimization",
+      "Flexible Repayment Tenure Up to 30 Years",
+      "Guided Paperwork & Multi-Lender Support",
     ],
-    targetAudience: "First-time Home Buyers & Existing Homeowners",
-  },
-  {
-    id: "business-loans",
-    title: "Business Loans",
-    iconName: "Building2",
-    category: "loans",
-    shortDescription: "Financing options for eligible business requirements.",
-    fullDescription: "Explore collateral-free business expansion options, working capital assistance, and equipment purchase financing for eligible business enterprises.",
-    keyFeatures: [
-      "Working Capital Facility Guidance",
-      "Business Expansion Financing Options",
-      "Machinery & Equipment Capital Assessment",
-      "Financial Statement Evaluation Support",
-    ],
-    targetAudience: "MSME Owners, Proprietors & Corporate Entities",
-  },
-  {
-    id: "real-estate",
-    title: "Real Estate",
-    iconName: "Building",
-    category: "realestate",
-    shortDescription: "Explore residential, commercial and property investment opportunities.",
-    fullDescription: "Curated access to prime residential developments, commercial space options, and land parcels across top Indian metros.",
-    keyFeatures: [
-      "Premium Residential Portfolio Exploration",
-      "Commercial Property Asset Evaluation",
-      "Strategic Plot & Land Opportunities",
-      "Document Guidance & Due-Diligence Checklist",
-    ],
-    targetAudience: "Property Investors, End-Users & Commercial Buyers",
-  },
-  {
-    id: "personal-loans",
-    title: "Personal Loans",
-    iconName: "Wallet",
-    category: "loans",
-    shortDescription: "Explore personal financing options for eligible requirements.",
-    fullDescription: "Unsecured credit options for medical emergency liquidity, educational funding, home renovation, or debt consolidation subject to lender eligibility.",
-    keyFeatures: [
-      "No Collateral Obligation Requirements",
-      "Flexible Repayment Schedules (12 to 60 Months)",
-      "Transparent Processing Guidelines",
-      "Salaried & Self-Employed Eligibility Pathways",
-    ],
-    targetAudience: "Salaried Employees & Eligible Professionals",
+    targetAudience: "Salaried Professionals, Business Owners & First-Time Buyers",
   },
   {
     id: "loan-against-property",
     title: "Loan Against Property",
     iconName: "FileCheck2",
     category: "loans",
-    shortDescription: "Explore financing options against eligible property.",
-    fullDescription: "Unlock liquidity from existing residential or commercial real estate assets to fund high-value capital goals at competitive terms.",
+    shortDescription: "Unlock capital leverage using your existing real estate assets.",
+    fullDescription: "Unencumbered residential or commercial property leverage for business expansion, debt consolidation, or capital goals.",
     keyFeatures: [
-      "High Ticket Capital Access",
-      "Longer Tenure Repayment Flexibility",
+      "High Ticket Loan Sanctions",
       "Residential & Commercial Property Eligibility",
-      "Retained Property Ownership & Occupancy",
+      "Longer Tenure Options (Up to 15-20 Years)",
+      "Retained Property Ownership",
     ],
-    targetAudience: "Property Owners & Business Enterprises",
+    targetAudience: "Property Owners, MSMEs & Business Enterprises",
+  },
+  {
+    id: "real-estate",
+    title: "Real Estate & Asset Advisory",
+    iconName: "Building",
+    category: "realestate",
+    shortDescription: "Curated residential, commercial, and property investment guidance.",
+    fullDescription: "Access to prime residential towers, commercial office suites, land parcels, and real asset opportunities.",
+    keyFeatures: [
+      "Prime Residential Portfolio Access",
+      "Grade-A Commercial Property Evaluation",
+      "Industrial & Warehousing Land Parcels",
+      "Document Guidance & Legal Due-Diligence Checklist",
+    ],
+    targetAudience: "Investors, End-Users & Corporate Buyers",
   },
 ];
 
 export const THREE_PRINCIPLES = [
   {
     number: "01",
-    title: "Understand",
-    description: "Understand your financial goals, priorities, risk profile and liquidity requirements through in-depth discussions.",
+    title: "Consult",
+    description: "Understand your financial goals, property vision, or credit requirements through structured advisory sessions.",
     icon: "Compass",
   },
   {
     number: "02",
-    title: "Plan",
-    description: "Explore suitable financial strategies, asset allocation models, and loan options matched to your profile.",
-    icon: "Compass",
+    title: "Structure",
+    description: "Evaluate lender products, compare terms, and structure custom solutions suited to your profile.",
+    icon: "Sliders",
   },
   {
     number: "03",
-    title: "Grow",
-    description: "Build a structured approach toward your long-term goals with disciplined periodic reviews and transparent communication.",
+    title: "Deploy & Review",
+    description: "Execute smoothly through guided paperwork, legal verification, and ongoing portfolio support.",
     icon: "TrendingUp",
-  },
-];
-
-export const WHY_CHOOSE_US_PILLARS = [
-  {
-    id: "personalized-guidance",
-    title: "Personalized Guidance",
-    description: "Tailored solutions based on individual goals, financial background, and personal risk comfort.",
-    icon: "UserCheck",
-  },
-  {
-    id: "transparent-approach",
-    title: "Transparent Approach",
-    description: "Clear communication with zero hidden terms, transparent disclosures, and straightforward processes.",
-    icon: "ShieldCheck",
-  },
-  {
-    id: "multiple-solutions",
-    title: "Multiple Financial Solutions",
-    description: "Comprehensive assistance under one umbrella across investments, property, and lender options.",
-    icon: "Layers",
-  },
-  {
-    id: "long-term-relationship",
-    title: "Long-Term Relationship",
-    description: "Ongoing financial alignment focused on long-term capital preservation and relationship trust.",
-    icon: "Handshake",
   },
 ];
 
@@ -346,22 +648,22 @@ export const HOW_IT_WORKS_STEPS = [
   {
     step: "01",
     title: "Tell Us Your Goal",
-    description: "Share your financial objectives, capital preferences, or loan requirements via our simple consultation form.",
+    description: "Share your financial objectives, property preferences, or loan requirements via our consultation desk.",
   },
   {
     step: "02",
-    title: "Understand Your Requirement",
-    description: "Our team discusses your specific situation, liquidity needs, and eligibility metrics in detail.",
+    title: "Structured Consultation",
+    description: "Our advisors discuss your specific situation, liquidity needs, and lender eligibility in detail.",
   },
   {
     step: "03",
-    title: "Explore Suitable Options",
-    description: "Review curated options, investment structures, or lender loan offers aligned with your interest.",
+    title: "Explore Curated Solutions",
+    description: "Review curated options, rate comparisons, or property asset listings aligned with your priorities.",
   },
   {
     step: "04",
-    title: "Take The Next Step",
-    description: "Proceed with structured documentation, application filing, or investment execution smoothly.",
+    title: "Seamless Execution",
+    description: "Proceed with structured documentation, legal verification, application filing, or property acquisition.",
   },
 ];
 
@@ -369,22 +671,22 @@ export const LOAN_PROCESS_STEPS = [
   {
     step: "01",
     title: "Eligibility Check",
-    description: "Evaluate applicant income profile, credit score, age, and existing commitments.",
+    description: "Evaluate applicant income profile, CIBIL score, age, and existing FOIR commitments.",
   },
   {
     step: "02",
     title: "Documentation",
-    description: "Collate necessary KYC documents, bank statements, and income proofs.",
+    description: "Collate necessary KYC documents, income statements, ITRs, and property title records.",
   },
   {
     step: "03",
-    title: "Application",
-    description: "Submit formal application file to matching partner banks and NBFCs.",
+    title: "Application Filing",
+    description: "Submit formal application file to matching partner banks and NBFC underwriting teams.",
   },
   {
     step: "04",
-    title: "Lender Process",
-    description: "Lender sanctions, performs property/credit verification, and completes disbursement.",
+    title: "Sanction & Disbursement",
+    description: "Lender sanctions, performs property legal/technical verification, and completes disbursement.",
   },
 ];
 
@@ -412,185 +714,50 @@ export const REAL_ESTATE_LISTINGS: PropertyListing[] = [
     id: "prop-1",
     title: "Prime Metropolitan Residence",
     category: "residential",
-    location: "Bandra-Kurla Complex Region, Mumbai",
+    location: "Sector 150 & Expressway Corridor, Noida",
     type: "Luxury 3 & 4 BHK Apartments",
     tag: "Residential Opportunity",
     description: "Modern high-rise residential spaces featuring expansive layouts, club amenities, and strategic city connectivity.",
-    highlights: ["Spacious Balconies", "Clubhouse & Gym", "High Security", "Metro Proximity"],
+    highlights: ["Spacious Balconies", "Clubhouse & Gym", "High Security", "Expressway Connectivity"],
     imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1000&auto=format&fit=crop",
   },
   {
     id: "prop-2",
     title: "Corporate Business Park Unit",
     category: "commercial",
-    location: "Golf Course Extension, Gurugram",
+    location: "Sector 62 & Tech Zone, Noida",
     type: "Grade-A Commercial Office Space",
     tag: "Commercial Asset",
     description: "Premium corporate office floors designed for modern enterprises, tech firms, and professional practices.",
-    highlights: ["Grade-A Architecture", "Central Air Conditioning", "100% Power Backup", "Ample Visitor Parking"],
+    highlights: ["Grade-A Architecture", "Central AC", "100% Power Backup", "Ample Parking"],
     imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop",
   },
   {
     id: "prop-3",
     title: "Gated Residential Community Plot",
     category: "plots",
-    location: "Devanahalli Tech Hub Corridor, Bengaluru",
+    location: "Yamuna Expressway Growth Corridor, NCR",
     type: "Villa Plot Parcels",
     tag: "Land Parcel",
     description: "Secured villa plots in a master-planned township with underground utilities, wide roads, and green parks.",
-    highlights: ["Clear Title Property", "Underground Cabling", "Landscaped Parks", "High Growth Corridor"],
+    highlights: ["Clear Title Property", "Underground Cabling", "Landscaped Parks", "Airport Proximity"],
     imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop",
   },
-  {
-    id: "prop-4",
-    title: "Urban Skyline Luxury Tower",
-    category: "residential",
-    location: "Worli Coastal Belt, Mumbai",
-    type: "Sea-Facing Penthouse & 4 BHK",
-    tag: "Premium Residence",
-    description: "Exquisite architectural design with sea views, private elevators, and state-of-the-art wellness centers.",
-    highlights: ["Panoramic Views", "Concierge Desk", "Infinity Pool", "Private Parking Bay"],
-    imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "prop-5",
-    title: "High Street Retail & Office Complex",
-    category: "commercial",
-    location: "Baner Commercial District, Pune",
-    type: "Retail Showrooms & Boutique Offices",
-    tag: "Commercial Space",
-    description: "Prime street-facing retail storefronts and office spaces in a bustling commercial hub with heavy footfall.",
-    highlights: ["Double Height Lobby", "High Footfall Zone", "Escalator Access", "Valet Parking"],
-    imageUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: "prop-6",
-    title: "Suburban Industrial & Logistics Park",
-    category: "plots",
-    location: "NH-48 Logistics Corridor, NCR",
-    type: "Industrial & Warehousing Land",
-    tag: "Industrial Plot",
-    description: "Strategically located land parcel ideal for warehousing, logistics hubs, or light manufacturing facilities.",
-    highlights: ["Highway Access", "Industrial Zone Clearance", "Wide Internal Roads", "High Load Utility Power"],
-    imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop",
-  },
 ];
 
-export const RESOURCE_ARTICLES: ResourceArticle[] = [
-  {
-    id: "art-1",
-    slug: "how-does-sip-investing-work",
-    category: "Investment",
-    title: "How Does SIP Investing Work?",
-    shortDescription: "A practical guide to systematic investment planning, rupee cost averaging, and compounding over long horizons.",
-    readTime: "5 min read",
-    date: "August 2026",
-    content: [
-      "Systematic Investment Planning (SIP) is a structured approach that enables investors to allocate a fixed sum into mutual fund schemes at regular intervals (monthly, quarterly).",
-      "Key Advantage: Rupee Cost Averaging. When markets fluctuate, buying fixed rupee amounts ensures you accumulate more units when prices are lower and fewer units when prices rise.",
-      "The Power of Time: Starting early gives your investments a longer duration to benefit from the compounding effect on reinvested growth.",
-      "Disclaimer: Mutual fund investments are subject to market risks. Past performance does not guarantee future results.",
-    ],
-  },
-  {
-    id: "art-2",
-    slug: "understanding-home-loan-eligibility",
-    category: "Loans",
-    title: "Understanding Home Loan Eligibility",
-    shortDescription: "Key parameters lenders evaluate when assessing home loan application capacity, FOIR ratios, and tenure selection.",
-    readTime: "6 min read",
-    date: "August 2026",
-    content: [
-      "Securing a home loan requires understanding how financial institutions calculate your borrowing capacity.",
-      "Key Factors Lenders Evaluate:",
-      "1. Fixed Obligation to Income Ratio (FOIR): Most lenders prefer total monthly EMI obligations to remain under 40%-50% of net monthly income.",
-      "2. Credit Score & History: A clean repayment history (CIBIL score above 750) generally improves eligibility and processing options.",
-      "3. Property Legal Clearance: Lenders perform independent legal and technical evaluation of the target real estate asset.",
-      "Disclaimer: Loan approvals and terms are subject to individual lender policies and applicant assessment.",
-    ],
-  },
-  {
-    id: "art-3",
-    slug: "things-to-consider-before-investing-in-real-estate",
-    category: "Real Estate",
-    title: "Things To Consider Before Investing In Real Estate",
-    shortDescription: "Crucial due-diligence steps including location infrastructure, clear title checks, and liquidity planning.",
-    readTime: "7 min read",
-    date: "July 2026",
-    content: [
-      "Real estate remains a prominent tangible asset class in India, but thorough due diligence is vital before committing capital.",
-      "1. Infrastructure Development: Assess proximity to transport hubs, metro lines, commercial districts, and social infrastructure.",
-      "2. Documentation & Approvals: Verify clear land titles, municipal sanction plans, and developer background credentials.",
-      "3. Cash-Flow & Rental Potential: Evaluate realistic rental yield expectations alongside long-term property appreciation outlook.",
-      "Disclaimer: Real estate investments carry liquidity risks. Legal verification by independent counsel is recommended.",
-    ],
-  },
-  {
-    id: "art-4",
-    slug: "personal-loan-documents-a-simple-guide",
-    category: "Financial Planning",
-    title: "Personal Loan Documents: A Simple Guide",
-    shortDescription: "A clear overview of essential identity, income, and banking records needed for smooth credit applications.",
-    readTime: "4 min read",
-    date: "July 2026",
-    content: [
-      "Having your documentation organized speeds up personal loan evaluation and verification processes.",
-      "Standard Requirements:",
-      "• Identity & Address Proof: Aadhaar, PAN Card, Passport, or Utility Bills.",
-      "• Salaried Applicants: Recent 3 months salary slips and 6 months bank statement showing salary credits.",
-      "• Self-Employed Applicants: 2-3 years ITR filings, profit & loss statements, and business current account statements.",
-      "Disclaimer: Document checklists may vary depending on lender requirements and applicant profiles.",
-    ],
-  },
-];
+export const TESTIMONIAL_PLACEHOLDERS = TESTIMONIALS_LIST.map(t => ({
+  id: t.id,
+  tag: t.service,
+  text: t.quote,
+  clientRole: t.role,
+  location: t.location,
+}));
 
-export const TESTIMONIAL_PLACEHOLDERS = [
-  {
-    id: "t1",
-    tag: "Wealth Advisory",
-    text: "Verified client testimonial will appear here upon authorization.",
-    clientRole: "Salaried Corporate Executive",
-    location: "Mumbai",
-  },
-  {
-    id: "t2",
-    tag: "Home Loan Assistance",
-    text: "Verified client testimonial will appear here upon authorization.",
-    clientRole: "IT Senior Manager",
-    location: "Bengaluru",
-  },
-  {
-    id: "t3",
-    tag: "Business Expansion Financing",
-    text: "Verified client testimonial will appear here upon authorization.",
-    clientRole: "MSME Business Proprietor",
-    location: "Delhi NCR",
-  },
-];
-
-export const TEAM_PLACEHOLDERS: TeamPlaceholder[] = [
-  {
-    id: "m1",
-    title: "Senior Advisory Member",
-    role: "Wealth & Investment Strategy",
-    department: "Wealth Management",
-    bioPlaceholder: "Professional credentials and executive profile will be updated here.",
-    experienceLevel: "15+ Years Industry Focus",
-  },
-  {
-    id: "m2",
-    title: "Financial Planning Specialist",
-    role: "Mutual Funds & Portfolio Guidance",
-    department: "Financial Services",
-    bioPlaceholder: "Professional credentials and executive profile will be updated here.",
-    experienceLevel: "12+ Years Industry Focus",
-  },
-  {
-    id: "m3",
-    title: "Real Estate & Loan Desk Lead",
-    role: "Mortgage & Property Advisory",
-    department: "Lending & Real Estate",
-    bioPlaceholder: "Professional credentials and executive profile will be updated here.",
-    experienceLevel: "10+ Years Industry Focus",
-  },
-];
+export const TEAM_PLACEHOLDERS: TeamPlaceholder[] = LEADERSHIP_TEAM.map(l => ({
+  id: l.id,
+  title: l.name,
+  role: l.designation,
+  department: "Executive Leadership",
+  bioPlaceholder: l.bio,
+  experienceLevel: l.experience,
+}));

@@ -1,87 +1,109 @@
 "use client";
 
 import React from "react";
-import { TEAM_PLACEHOLDERS, TeamPlaceholder } from "@/lib/data";
-import type { TeamMember } from "@prisma/client";
-import { UserCheck, Award } from "lucide-react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ExternalLink, Sparkles, Award } from "lucide-react";
+import { LEADERSHIP_TEAM, LeadershipMember } from "@/lib/data";
+import { FadeIn, ClipReveal, StaggerContainer, StaggerItem, EASING } from "@/components/motion/MotionHelpers";
 
-type DisplayMember = TeamMember | TeamPlaceholder;
-
-const getMemberName = (m: DisplayMember) => ("name" in m ? m.name : m.title);
-const getMemberDept = (m: DisplayMember) =>
-  "designation" in m && m.designation ? m.designation : "department" in m ? m.department : "";
-const getMemberRole = (m: DisplayMember) =>
-  "designation" in m && m.designation ? m.designation : "role" in m ? m.role : "";
-const getMemberBio = (m: DisplayMember) =>
-  "bio" in m ? m.bio ?? "" : "bioPlaceholder" in m ? m.bioPlaceholder : "";
-const getMemberExperience = (m: DisplayMember) =>
-  "experienceLevel" in m ? m.experienceLevel : "designation" in m && m.designation ? m.designation : "";
-
-interface TeamSectionProps {
-  teamMembers?: TeamMember[];
-}
-
-export const TeamSection: React.FC<TeamSectionProps> = ({ teamMembers }) => {
-  const members: DisplayMember[] = teamMembers && teamMembers.length > 0 ? teamMembers : TEAM_PLACEHOLDERS;
-
+export const TeamSection: React.FC = () => {
   return (
-    <section className="py-24 bg-white text-[#1A0505] relative">
+    <section id="leadership" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-extrabold text-gold-primary uppercase tracking-widest block mb-2">
-            CORPORATE LEADERSHIP & ADVISORY
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-red">
-            Meet Our Team
-          </h2>
-          <p className="mt-4 text-slate-600 text-base sm:text-lg">
-            Our advisory team brings structured capital market experience, loan syndication expertise, and real estate insights.
-          </p>
-        </div>
 
-        {/* Team Placeholders Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {members.map((member) => (
-            <div
-              key={member.id}
-              className="bg-white border border-slate-200 rounded-3xl p-8 hover:border-gold-glow hover:bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-20 h-20 rounded-2xl bg-brand-gradient text-gold-light flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform">
-                  <UserCheck className="w-10 h-10 text-gold-primary" />
-                </div>
-
-                <div className="mb-2">
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-brand-dark/10 text-brand-red">
-                    {getMemberDept(member)}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-extrabold text-brand-red mb-1">
-                  {getMemberName(member)}
-                </h3>
-
-                <p className="text-xs font-bold text-gold-primary mb-4">
-                  {getMemberRole(member)}
-                </p>
-
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-                  {getMemberBio(member)}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
-                <div className="flex items-center gap-1.5 font-semibold text-brand-red">
-                  <Award className="w-4 h-4 text-gold-primary" />
-                  <span>{getMemberExperience(member)}</span>
-                </div>
-                <span className="text-[11px] text-slate-400">Editable Profile</span>
-              </div>
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+          <FadeIn direction="up">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#B89028] text-xs font-extrabold uppercase tracking-widest">
+              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <span>EXECUTIVE LEADERSHIP</span>
             </div>
-          ))}
+          </FadeIn>
+
+          <FadeIn direction="up" delay={0.1}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#111827] tracking-tight">
+              Our <span className="text-gold-gradient">Leadership</span>
+            </h2>
+          </FadeIn>
+
+          <FadeIn direction="up" delay={0.2}>
+            <div className="gold-divider mx-auto"></div>
+          </FadeIn>
+
+          <FadeIn direction="up" delay={0.3}>
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed font-normal">
+              Guided by seasoned financial leaders with proven backgrounds in wealth management, credit syndication, and real estate advisory.
+            </p>
+          </FadeIn>
         </div>
+
+        {/* Leadership Team Cards with ClipReveal */}
+        <StaggerContainer staggerDelay={0.15} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {LEADERSHIP_TEAM.map((member: LeadershipMember) => (
+            <StaggerItem key={member.id}>
+              <motion.div
+                whileHover={{ y: -4, borderColor: "rgba(212, 175, 55, 0.6)" }}
+                transition={{ duration: 0.35, ease: EASING }}
+                className="bg-white rounded-3xl overflow-hidden border border-[#D4AF37]/30 shadow-lg hover:shadow-2xl transition-all group flex flex-col justify-between h-full"
+              >
+                <div>
+                  {/* Member Photo with ClipReveal */}
+                  <ClipReveal direction="top" duration={0.8}>
+                    <div className="relative h-72 w-full overflow-hidden bg-gray-900">
+                      <Image
+                        src={member.photoUrl}
+                        alt={member.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+
+                      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                        <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-[#D4AF37] text-[#0B0F19]">
+                          {member.experience}
+                        </span>
+                        {member.linkedinUrl && (
+                          <motion.a
+                            whileHover={{ scale: 1.1 }}
+                            href={member.linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-8 h-8 rounded-full bg-white/20 hover:bg-[#D4AF37] text-white hover:text-[#0B0F19] flex items-center justify-center backdrop-blur-md transition-colors"
+                            aria-label={`${member.name} Profile`}
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </motion.a>
+                        )}
+                      </div>
+                    </div>
+                  </ClipReveal>
+
+                  {/* Member Details */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-black text-[#111827] mb-1 group-hover:text-[#B89028] transition-colors">
+                      {member.name}
+                    </h3>
+
+                    <p className="text-xs font-bold text-[#B89028] uppercase tracking-wider mb-4">
+                      {member.designation}
+                    </p>
+
+                    <p className="text-gray-600 text-xs leading-relaxed font-medium">
+                      {member.bio}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-6 py-3 bg-[#FDF8F0] border-t border-gray-100 flex items-center gap-2 text-[11px] text-[#B89028] font-bold">
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Executive Advisory Member</span>
+                </div>
+              </motion.div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
 
       </div>
     </section>
