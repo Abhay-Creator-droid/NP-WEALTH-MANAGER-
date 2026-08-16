@@ -46,3 +46,4 @@ app-temp/
 # local database
 prisma/dev.db
 prisma/**/*.db
+.env
