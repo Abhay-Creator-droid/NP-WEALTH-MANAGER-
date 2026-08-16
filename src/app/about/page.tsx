@@ -1,9 +1,9 @@
 import React from "react";
+import { PageHero } from "@/components/layout/PageHero";
 import { TeamSection } from "@/components/sections/TeamSection";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
-import { ShieldCheck, Target, Award, Users, Sparkles, CheckCircle2 } from "lucide-react";
-import { COMPANY_CONFIG } from "@/lib/config";
+import { ShieldCheck, Target, Award, CheckCircle2 } from "lucide-react";
 
 export const metadata = {
   title: "About Us | NP Wealth Managers",
@@ -12,32 +12,19 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen pt-24">
-      {/* Header Banner */}
-      <section className="bg-[#0B0F19] text-white py-16 border-b border-[#D4AF37]/30 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#F2D675] text-xs font-extrabold uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5 text-[#F2D675]" />
-            <span>WHO WE ARE</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            About <span className="text-gold-gradient">NP Wealth Managers</span>
-          </h1>
-
-          <div className="gold-divider mx-auto"></div>
-
-          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-            Plan · Manage · Grow · Protect — Delivering transparent financial planning, competitive home loan syndication, and real-asset advisory across India.
-          </p>
-        </div>
-      </section>
+    <main className="min-h-screen">
+      <PageHero
+        eyebrow="WHO WE ARE"
+        title="About NP Wealth Managers"
+        description="Plan · Manage · Grow · Protect — Delivering transparent financial planning, competitive home loan syndication, and real-asset advisory across India."
+        bgImage="https://images.pexels.com/photos/7845366/pexels-photo-7845366.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      />
 
       {/* Company Overview & Mission */}
       <section className="bg-[#FDF8F0] py-20 border-b border-[#D4AF37]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
+
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#D4AF37]/15 text-[#B89028] text-xs font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />

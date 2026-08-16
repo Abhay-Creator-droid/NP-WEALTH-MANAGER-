@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   Menu,
   X,
@@ -11,60 +12,52 @@ import {
   Home,
   FileCheck2,
   RefreshCw,
-  Calculator,
   Building,
   Briefcase,
+  TrendingUp,
+  Calculator,
   Users,
-  ShieldCheck,
-  Star,
-  Award,
+  Sparkles,
 } from "lucide-react";
 import { COMPANY_CONFIG } from "@/lib/config";
 import { useConsultation } from "@/context/ConsultationContext";
 
 const SERVICES_DROPDOWN = [
-  { label: "Home Loans", href: "#services", icon: Home, desc: "Buy, build or construct your home" },
-  { label: "Loan Against Property", href: "#services", icon: FileCheck2, desc: "Leverage existing property equity" },
-  { label: "Balance Transfer", href: "#services", icon: RefreshCw, desc: "Optimize interest rate & EMIs" },
-  { label: "Real Estate Advisory", href: "#services", icon: Building, desc: "Residential & commercial property" },
-  { label: "Wealth Management", href: "#services", icon: Briefcase, desc: "SIP & portfolio planning" },
+  { label: "All Services", href: "/services", icon: Sparkles, desc: "Full solutions catalog" },
+  { label: "Home Loans", href: "/loans", icon: Home, desc: "Buy, build or construct your home" },
+  { label: "Loan Against Property", href: "/loans", icon: FileCheck2, desc: "Leverage existing property equity" },
+  { label: "Balance Transfer", href: "/loans", icon: RefreshCw, desc: "Optimize interest rate & EMIs" },
+  { label: "Real Estate Advisory", href: "/real-assets", icon: Building, desc: "Residential & commercial property" },
+  { label: "Wealth Management", href: "/investments", icon: Briefcase, desc: "SIP & portfolio planning" },
+  { label: "EMI Calculator", href: "/calculators", icon: Calculator, desc: "Plan your monthly installments" },
+];
+
+const NAV_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services", hasDropdown: true },
+  { label: "Resources", href: "/resources" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const pathname = usePathname();
 
   const servicesRef = useRef<HTMLDivElement>(null);
   const { openConsultationModal } = useConsultation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-
-      // Section spy for active link highlight
-      const sections = ["hero", "services", "resources", "about", "contact"];
-      const scrollPosition = window.scrollY + 200;
-
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
@@ -75,39 +68,38 @@ export const Navbar: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
+  useEffect(() => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
+  }, [pathname]);
 
-    if (id === "hero") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
 
-    const el = document.getElementById(id);
-    if (el) {
-      const yOffset = -80;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
   };
 
   const navbarStyle = isScrolled
-    ? "bg-[#0B0F19]/90 backdrop-blur-md shadow-2xl py-3 border-b border-[#D4AF37]/30"
-    : "bg-transparent py-4 border-b border-white/10";
+    ? "bg-[#0B0F19]/90 backdrop-blur-md shadow-lg border-b border-[#D4AF37]/30"
+    : "bg-transparent border-b border-transparent";
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarStyle}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
 
         {/* Left: Brand Logo & Title */}
-        <a
-          href="#hero"
-          onClick={(e) => scrollToSection(e, "hero")}
-          className="flex items-center gap-3 group cursor-pointer"
-        >
-          <div className="relative h-10 w-10 sm:h-11 sm:w-11 rounded-lg overflow-hidden bg-white p-0.5 shadow-md border-2 border-[#D4AF37] group-hover:scale-105 transition-transform shrink-0">
+        <Link href="/" className="flex items-center gap-3 group cursor-pointer shrink-0">
+          <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-lg overflow-hidden bg-white p-0.5 shadow-md border border-[#D4AF37] group-hover:scale-105 transition-transform shrink-0">
             <Image
               src={COMPANY_CONFIG.logoUrl}
               alt={COMPANY_CONFIG.name}
@@ -118,141 +110,105 @@ export const Navbar: React.FC = () => {
             />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="font-black text-lg md:text-xl text-[#F2D675] tracking-wider leading-none">
+            <span className="font-black text-base md:text-lg text-[#F2D675] tracking-wider leading-none">
               NP
             </span>
-            <span className="font-bold text-base md:text-lg text-white tracking-wide leading-none">
+            <span className="font-bold text-sm md:text-base text-white tracking-wide leading-none">
               Wealth Managers
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Center: Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-2 xl:gap-4">
-          {/* Home */}
-          <a
-            href="#hero"
-            onClick={(e) => scrollToSection(e, "hero")}
-            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
-              activeSection === "hero"
-                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
-                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
-            }`}
-          >
-            Home
-          </a>
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          {NAV_LINKS.map((link) =>
+            link.hasDropdown ? (
+              <div className="relative" ref={servicesRef} key={link.label}>
+                <button
+                  onClick={() => setServicesOpen(!servicesOpen)}
+                  onMouseEnter={() => setServicesOpen(true)}
+                  className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                    isActive("/services") || isActive("/loans") || isActive("/investments") || isActive("/real-assets") || isActive("/calculators")
+                      ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                      : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                      servicesOpen ? "rotate-180 text-[#F2D675]" : ""
+                    }`}
+                  />
+                </button>
 
-          {/* Services Dropdown */}
-          <div className="relative" ref={servicesRef}>
-            <button
-              onClick={() => setServicesOpen(!servicesOpen)}
-              onMouseEnter={() => setServicesOpen(true)}
-              className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                activeSection === "services"
-                  ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
-                  : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
-              }`}
-            >
-              <span>Services</span>
-              <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  servicesOpen ? "rotate-180 text-[#F2D675]" : ""
-                }`}
-              />
-            </button>
-
-            {servicesOpen && (
-              <div
-                onMouseLeave={() => setServicesOpen(false)}
-                className="absolute top-full left-0 mt-2 w-72 bg-[#111827] border border-[#D4AF37]/40 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden z-50 animate-fade-in-up"
-              >
-                <div className="px-4 py-2.5 border-b border-white/10 bg-[#0B0F19]">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#F2D675]">
-                    Financial & Loan Services
-                  </span>
-                </div>
-                <div className="p-2 space-y-1">
-                  {SERVICES_DROPDOWN.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        onClick={(e) => scrollToSection(e, "services")}
-                        className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer"
-                      >
-                        <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0 group-hover:bg-[#D4AF37] transition-colors">
-                          <Icon className="w-3.5 h-3.5 text-[#F2D675] group-hover:text-[#0B0F19]" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-bold text-white group-hover:text-[#F2D675] transition-colors">
-                            {item.label}
-                          </p>
-                          <p className="text-[10px] text-gray-400 font-normal leading-tight">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
+                {servicesOpen && (
+                  <div
+                    onMouseLeave={() => setServicesOpen(false)}
+                    className="absolute top-full left-0 mt-2 w-80 bg-[#111827] border border-[#D4AF37]/40 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden z-50"
+                    style={{ animation: "fadeInUp 0.25s ease-out" }}
+                  >
+                    <div className="px-4 py-2.5 border-b border-white/10 bg-[#0B0F19]">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#F2D675]">
+                        Financial & Loan Services
+                      </span>
+                    </div>
+                    <div className="p-2 space-y-1 max-h-[420px] overflow-y-auto">
+                      {SERVICES_DROPDOWN.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            onClick={() => setServicesOpen(false)}
+                            className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer"
+                          >
+                            <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0 group-hover:bg-[#D4AF37] transition-colors">
+                              <Icon className="w-3.5 h-3.5 text-[#F2D675] group-hover:text-[#0B0F19]" />
+                            </div>
+                            <div>
+                              <p className="text-xs font-bold text-white group-hover:text-[#F2D675] transition-colors">
+                                {item.label}
+                              </p>
+                              <p className="text-[10px] text-gray-400 font-normal leading-tight">
+                                {item.desc}
+                              </p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-
-          {/* Resources */}
-          <a
-            href="#resources"
-            onClick={(e) => scrollToSection(e, "resources")}
-            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
-              activeSection === "resources"
-                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
-                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
-            }`}
-          >
-            Resources
-          </a>
-
-          {/* About Us */}
-          <a
-            href="#about"
-            onClick={(e) => scrollToSection(e, "about")}
-            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
-              activeSection === "about"
-                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
-                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
-            }`}
-          >
-            About Us
-          </a>
-
-          {/* Contact */}
-          <a
-            href="#contact"
-            onClick={(e) => scrollToSection(e, "contact")}
-            className={`px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
-              activeSection === "contact"
-                ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
-                : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
-            }`}
-          >
-            Contact
-          </a>
+            ) : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
+                  isActive(link.href)
+                    ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                    : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Right: Phone & Book Consultation CTA */}
-        <div className="hidden lg:flex items-center gap-5">
+        <div className="hidden lg:flex items-center gap-4">
           <a
             href={`tel:${COMPANY_CONFIG.phoneRaw}`}
             className="flex items-center gap-2 text-xs font-semibold text-gray-200 hover:text-[#F2D675] transition-colors"
           >
             <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>{COMPANY_CONFIG.phoneDisplay}</span>
+            <span className="hidden xl:inline">{COMPANY_CONFIG.phoneDisplay}</span>
           </a>
 
           <button
             onClick={() => openConsultationModal("General Consultation")}
-            className="px-5 py-2.5 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all cursor-pointer"
+            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
           >
             Book Consultation
           </button>
@@ -278,60 +234,110 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[70px] bg-[#0B0F19] border-b-2 border-[#D4AF37]/40 shadow-2xl px-5 py-6 space-y-3 z-50">
-          <a
-            href="#hero"
-            onClick={(e) => scrollToSection(e, "hero")}
-            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
-          >
-            Home
-          </a>
-          <a
-            href="#services"
-            onClick={(e) => scrollToSection(e, "services")}
-            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
-          >
-            Services
-          </a>
-          <a
-            href="#resources"
-            onClick={(e) => scrollToSection(e, "resources")}
-            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
-          >
-            Resources
-          </a>
-          <a
-            href="#about"
-            onClick={(e) => scrollToSection(e, "about")}
-            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
-          >
-            About Us
-          </a>
-          <a
-            href="#contact"
-            onClick={(e) => scrollToSection(e, "contact")}
-            className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-white hover:bg-white/10"
-          >
-            Contact
-          </a>
+        <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-[#0B0F19] border-t border-[#D4AF37]/40 shadow-2xl overflow-y-auto z-50">
+          <div className="px-5 py-6 space-y-2">
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            >
+              Home
+            </Link>
 
-          <div className="pt-4 border-t border-white/10 space-y-3">
-            <a
-              href={`tel:${COMPANY_CONFIG.phoneRaw}`}
-              className="flex items-center gap-3 text-sm font-semibold text-gray-200"
+            {/* Mobile Services Accordion */}
+            <div>
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+              >
+                <span>Services</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {mobileServicesOpen && (
+                <div className="pl-4 space-y-1 mt-1">
+                  {SERVICES_DROPDOWN.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
+                      >
+                        <Icon className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/resources"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
-              <Phone className="w-4 h-4 text-[#D4AF37]" />
-              <span>{COMPANY_CONFIG.phoneDisplay}</span>
-            </a>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                openConsultationModal("General Consultation");
-              }}
-              className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-[#F2D675] text-[#4A1515] font-black text-sm rounded-xl shadow-lg"
+              Resources
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
-              Book Consultation
-            </button>
+              About Us
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            >
+              Contact
+            </Link>
+
+            {/* Additional Pages */}
+            <div className="pt-2 border-t border-white/10">
+              <Link
+                href="/testimonials"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
+              >
+                Testimonials
+              </Link>
+              <Link
+                href="/partners"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
+              >
+                Our Partners
+              </Link>
+              <Link
+                href="/careers"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
+              >
+                Careers
+              </Link>
+            </div>
+
+            <div className="pt-4 border-t border-white/10 space-y-3">
+              <a
+                href={`tel:${COMPANY_CONFIG.phoneRaw}`}
+                className="flex items-center gap-3 text-sm font-semibold text-gray-200"
+              >
+                <Phone className="w-4 h-4 text-[#D4AF37]" />
+                <span>{COMPANY_CONFIG.phoneDisplay}</span>
+              </a>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openConsultationModal("General Consultation");
+                }}
+                className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-[#F2D675] text-[#4A1515] font-black text-sm rounded-xl shadow-lg"
+              >
+                Book Consultation
+              </button>
+            </div>
           </div>
         </div>
       )}

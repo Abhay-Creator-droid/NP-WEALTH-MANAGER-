@@ -1,36 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
+import { PageHero } from "@/components/layout/PageHero";
 import { EmiCalculator } from "@/components/sections/EmiCalculator";
 import { PartnersSection } from "@/components/sections/PartnersSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
-import { Home, FileCheck2, RefreshCw, CheckCircle2, FileText, ShieldCheck, Sparkles } from "lucide-react";
+import { Home, FileCheck2, RefreshCw, CheckCircle2, FileText, ShieldCheck } from "lucide-react";
 import { DOCUMENT_CHECKLIST_DATA, LOAN_PROCESS_STEPS } from "@/lib/data";
 
 export default function LoansPage() {
   const [docTab, setDocTab] = useState<"salaried" | "selfEmployed">("salaried");
 
   return (
-    <main className="min-h-screen pt-24">
-      {/* Hero Banner */}
-      <section className="bg-[#0B0F19] text-white py-16 border-b border-[#D4AF37]/30 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#F2D675] text-xs font-extrabold uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5 text-[#F2D675]" />
-            <span>MORTGAGE & CREDIT SYNDICATION</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Loan Solutions & <span className="text-gold-gradient">Mortgage Guidance</span>
-          </h1>
-
-          <div className="gold-divider mx-auto"></div>
-
-          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-            Home Purchase Loans, Loan Against Property, and Home Loan Balance Transfer optimized across 25+ partner banks & NBFCs.
-          </p>
-        </div>
-      </section>
+    <main className="min-h-screen">
+      <PageHero
+        eyebrow="MORTGAGE & CREDIT SYNDICATION"
+        title="Loan Solutions & Mortgage Guidance"
+        description="Home Purchase Loans, Loan Against Property, and Home Loan Balance Transfer optimized across 25+ partner banks & NBFCs."
+        bgImage="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      />
 
       {/* 3 Core Loan Offerings */}
       <section className="bg-[#FDF8F0] py-20 border-b border-[#D4AF37]/20">
