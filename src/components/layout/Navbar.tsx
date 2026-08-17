@@ -33,11 +33,13 @@ const SERVICES_DROPDOWN = [
 ];
 
 const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services", hasDropdown: true },
-  { label: "Resources", href: "/resources" },
-  { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  // Small change: use hash targets to scroll to sections on the homepage.
+  { label: "Home", href: "/#home" },
+  // Services keeps dropdown, but main "Services" button will point to the services section on the homepage.
+  { label: "Services", href: "/#services", hasDropdown: true },
+  { label: "Resources", href: "/resources" }, // this appears to be a separate page - keep it as-is
+  { label: "About Us", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const Navbar: React.FC = () => {
@@ -84,9 +86,17 @@ export const Navbar: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
+  // Updated isActive: treat hash links (/#something) as active when on the homepage.
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    return pathname === href || pathname.startsWith(href + "/");
+    try {
+      if (href.startsWith("/#")) {
+        return pathname === "/";
+      }
+      if (href === "/") return pathname === "/";
+      return pathname === href || pathname.startsWith(href + "/");
+    } catch {
+      return false;
+    }
   };
 
   const navbarStyle = isScrolled
@@ -208,7 +218,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => openConsultationModal("General Consultation")}
-            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95"
           >
             Book Consultation
           </button>
@@ -236,8 +246,9 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-[#0B0F19] border-t border-[#D4AF37]/40 shadow-2xl overflow-y-auto z-50">
           <div className="px-5 py-6 space-y-2">
+            {/* Mobile links updated to use the hash targets for homepage sections */}
             <Link
-              href="/"
+              href="/#home"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
@@ -281,21 +292,21 @@ export const Navbar: React.FC = () => {
               Resources
             </Link>
             <Link
-              href="/about"
+              href="/#about"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               About Us
             </Link>
             <Link
-              href="/contact"
+              href="/#contact"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Contact
             </Link>
 
-            {/* Additional Pages */}
+            {/* Additional Pages (left as page routes) */}
             <div className="pt-2 border-t border-white/10">
               <Link
                 href="/testimonials"
