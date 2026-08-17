@@ -3,10 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
 import { COMPANY_CONFIG } from "@/lib/config";
-import { FadeIn, StaggerContainer, StaggerItem, EASING } from "@/components/motion/MotionHelpers";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion/MotionHelpers";
 
 export const Footer: React.FC = () => {
   return (
@@ -21,7 +20,7 @@ export const Footer: React.FC = () => {
 
           {/* Brand Column (4 Cols) */}
           <StaggerItem className="lg:col-span-4 space-y-6">
-            <a href="#hero" className="flex items-center gap-3.5 group">
+            <Link href="/" className="flex items-center gap-3.5 group">
               <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white p-0.5 shadow-lg border border-[#D4AF37]/50 shrink-0 group-hover:scale-105 transition-transform">
                 <Image
                   src={COMPANY_CONFIG.logoUrl}
@@ -42,7 +41,7 @@ export const Footer: React.FC = () => {
                   Plan · Manage · Grow · Protect
                 </span>
               </div>
-            </a>
+            </Link>
 
             <p className="text-gray-300 text-xs leading-relaxed font-normal">
               Structured wealth management, home loan syndication, mortgage solutions, and real-asset advisory tailored for individuals, families, and business enterprises across India.
@@ -85,29 +84,29 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-300 font-medium">
               <li>
-                <a href="#about" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/about" className="hover:text-[#F2D675] transition-colors">
                   About Us & Approach
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#leadership" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/about" className="hover:text-[#F2D675] transition-colors">
                   Leadership Team
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#testimonials" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/testimonials" className="hover:text-[#F2D675] transition-colors">
                   Client Stories
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#partners" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/partners" className="hover:text-[#F2D675] transition-colors">
                   Our Bank Partners
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#careers" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/careers" className="hover:text-[#F2D675] transition-colors">
                   Careers & Culture
-                </a>
+                </Link>
               </li>
             </ul>
           </StaggerItem>
@@ -119,29 +118,34 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-300 font-medium">
               <li>
-                <a href="#services" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/loans" className="hover:text-[#F2D675] transition-colors">
                   Home Loan Solutions
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/loans" className="hover:text-[#F2D675] transition-colors">
                   Loan Against Property (LAP)
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/loans" className="hover:text-[#F2D675] transition-colors">
                   Home Loan Balance Transfer
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#F2D675] transition-colors">
+                <Link href="/real-assets" className="hover:text-[#F2D675] transition-colors">
                   Real Estate & Property Advisory
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#F2D675] transition-colors">
-                  Business & Commercial Credit
-                </a>
+                <Link href="/investments" className="hover:text-[#F2D675] transition-colors">
+                  Wealth & Portfolio Advisory
+                </Link>
+              </li>
+              <li>
+                <Link href="/calculators" className="hover:text-[#F2D675] transition-colors">
+                  EMI & SIP Calculators
+                </Link>
               </li>
             </ul>
           </StaggerItem>
@@ -196,15 +200,15 @@ export const Footer: React.FC = () => {
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
             <p>© {new Date().getFullYear()} NP WEALTH MANAGERS. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <a href="#contact" className="hover:text-[#F2D675] transition-colors">
+              <Link href="/contact" className="hover:text-[#F2D675] transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#contact" className="hover:text-[#F2D675] transition-colors">
+              </Link>
+              <Link href="/contact" className="hover:text-[#F2D675] transition-colors">
                 Terms & Disclaimer
-              </a>
-              <a href="#contact" className="hover:text-[#F2D675] transition-colors">
+              </Link>
+              <Link href="/contact" className="hover:text-[#F2D675] transition-colors">
                 Contact Desk
-              </a>
+              </Link>
             </div>
           </div>
         </FadeIn>

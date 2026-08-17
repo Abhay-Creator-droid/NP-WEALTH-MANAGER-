@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Menu,
   X,
@@ -23,12 +23,11 @@ import { useConsultation } from "@/context/ConsultationContext";
 interface NavLinkItem {
   label: string;
   href: string;
-  targetId?: string;
   hasDropdown?: boolean;
 }
 
 const SERVICES_DROPDOWN = [
-  { label: "All Services Overview", href: "/#services", targetId: "services", icon: Sparkles, desc: "Explore full solutions & advisory catalog" },
+  { label: "All Services Overview", href: "/services", icon: Sparkles, desc: "Explore full solutions & advisory catalog" },
   { label: "Home Loans", href: "/loans", icon: Home, desc: "Buy, build or construct your home" },
   { label: "Loan Against Property", href: "/loans", icon: FileCheck2, desc: "Leverage existing property equity" },
   { label: "Balance Transfer", href: "/loans", icon: RefreshCw, desc: "Optimize interest rate & EMIs" },
@@ -38,12 +37,12 @@ const SERVICES_DROPDOWN = [
 ];
 
 const NAV_LINKS: NavLinkItem[] = [
-  { label: "Home", href: "/#hero", targetId: "hero" },
-  { label: "About Us", href: "/#about", targetId: "about" },
-  { label: "Services", href: "/#services", targetId: "services", hasDropdown: true },
-  { label: "Leadership", href: "/#leadership", targetId: "leadership" },
-  { label: "Careers", href: "/#careers", targetId: "careers" },
-  { label: "Contact", href: "/#contact", targetId: "contact" },
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services", hasDropdown: true },
+  { label: "Resources", href: "/resources" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const Navbar: React.FC = () => {
@@ -52,7 +51,6 @@ export const Navbar: React.FC = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
 
   const servicesRef = useRef<HTMLDivElement>(null);
   const { openConsultationModal } = useConsultation();
@@ -91,48 +89,20 @@ export const Navbar: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
-    href: string,
-    targetId?: string
-  ) => {
-    setMobileMenuOpen(false);
-    setServicesOpen(false);
-
-    if (href.startsWith("/#")) {
-      const id = targetId || href.replace("/#", "");
-      if (pathname === "/") {
-        e.preventDefault();
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-          window.history.pushState(null, "", `#${id}`);
-        }
-        return;
-      }
-
-      e.preventDefault();
-      router.push(href);
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 200);
-      return;
-    }
-
-    if (pathname === "/" && href === "/") {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      window.history.pushState(null, "", "/");
-    }
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
   };
 
-  const isActive = (href: string) => {
-    if (href === "/" || href === "/#hero") return pathname === "/";
-    const cleanHref = href.replace("/#", "/");
-    return pathname === cleanHref || pathname.startsWith(cleanHref + "/");
+  const isServicesActive = () => {
+    return (
+      pathname === "/services" ||
+      pathname === "/loans" ||
+      pathname === "/investments" ||
+      pathname === "/real-assets" ||
+      pathname === "/real-estate" ||
+      pathname === "/calculators"
+    );
   };
 
   const navbarStyle = isScrolled
@@ -145,8 +115,11 @@ export const Navbar: React.FC = () => {
 
         {/* Left: Brand Logo & Title */}
         <Link
-          href="/#hero"
-          onClick={(e) => handleNavClick(e, "/#hero", "hero")}
+          href="/"
+          onClick={() => {
+            setMobileMenuOpen(false);
+            setServicesOpen(false);
+          }}
           className="flex items-center gap-3 group cursor-pointer shrink-0"
         >
           <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-lg overflow-hidden bg-white p-0.5 shadow-md border border-[#D4AF37] group-hover:scale-105 transition-transform shrink-0">
@@ -174,23 +147,32 @@ export const Navbar: React.FC = () => {
           {NAV_LINKS.map((link) =>
             link.hasDropdown ? (
               <div className="relative" ref={servicesRef} key={link.label}>
-                <button
-                  type="button"
-                  onClick={(e) => handleNavClick(e, link.href, link.targetId)}
+                <div
+                  className="flex items-center"
                   onMouseEnter={() => setServicesOpen(true)}
-                  className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                    isActive("/services") || isActive("/loans") || isActive("/investments") || isActive("/real-assets") || isActive("/calculators") || servicesOpen
-                      ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
-                      : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
-                  }`}
                 >
-                  <span>{link.label}</span>
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      servicesOpen ? "rotate-180 text-[#F2D675]" : ""
+                  <Link
+                    href={link.href}
+                    onClick={() => setServicesOpen(false)}
+                    className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                      isServicesActive() || servicesOpen
+                        ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
+                        : "text-gray-200 hover:text-[#F2D675] hover:bg-white/5"
                     }`}
-                  />
-                </button>
+                  >
+                    <span>{link.label}</span>
+                    <ChevronDown
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setServicesOpen(!servicesOpen);
+                      }}
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        servicesOpen ? "rotate-180 text-[#F2D675]" : ""
+                      }`}
+                    />
+                  </Link>
+                </div>
 
                 {servicesOpen && (
                   <div
@@ -210,7 +192,7 @@ export const Navbar: React.FC = () => {
                           <Link
                             key={item.label}
                             href={item.href}
-                            onClick={(e) => handleNavClick(e, item.href, item.targetId)}
+                            onClick={() => setServicesOpen(false)}
                             className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/10 transition-colors group cursor-pointer"
                           >
                             <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0 group-hover:bg-[#D4AF37] transition-colors">
@@ -235,7 +217,6 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.label}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href, link.targetId)}
                 className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   isActive(link.href)
                     ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
@@ -292,16 +273,16 @@ export const Navbar: React.FC = () => {
         <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-[#0B0F19] border-t border-[#D4AF37]/40 shadow-2xl overflow-y-auto z-50">
           <div className="px-5 py-6 space-y-2">
             <Link
-              href="/#hero"
-              onClick={(e) => handleNavClick(e, "/#hero", "hero")}
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Home
             </Link>
 
             <Link
-              href="/#about"
-              onClick={(e) => handleNavClick(e, "/#about", "about")}
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               About Us
@@ -309,14 +290,23 @@ export const Navbar: React.FC = () => {
 
             {/* Mobile Services Accordion */}
             <div>
-              <button
-                type="button"
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors cursor-pointer"
-              >
-                <span>Services</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? "rotate-180 text-[#F2D675]" : ""}`} />
-              </button>
+              <div className="flex items-center justify-between rounded-xl hover:bg-white/10 transition-colors">
+                <Link
+                  href="/services"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex-1 px-4 py-3 text-sm font-semibold text-white"
+                >
+                  Services
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  className="p-3 text-white focus:outline-none cursor-pointer"
+                  aria-label="Expand Services"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? "rotate-180 text-[#F2D675]" : ""}`} />
+                </button>
+              </div>
               {mobileServicesOpen && (
                 <div className="pl-4 space-y-1 mt-1 border-l-2 border-[#D4AF37]/30 ml-3">
                   {SERVICES_DROPDOWN.map((item) => {
@@ -325,7 +315,7 @@ export const Navbar: React.FC = () => {
                       <Link
                         key={item.label}
                         href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href, item.targetId)}
+                        onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
                       >
                         <Icon className="w-4 h-4 text-[#D4AF37] shrink-0" />
@@ -338,24 +328,24 @@ export const Navbar: React.FC = () => {
             </div>
 
             <Link
-              href="/#leadership"
-              onClick={(e) => handleNavClick(e, "/#leadership", "leadership")}
+              href="/resources"
+              onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
-              Leadership
+              Resources
             </Link>
 
             <Link
-              href="/#careers"
-              onClick={(e) => handleNavClick(e, "/#careers", "careers")}
+              href="/careers"
+              onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Careers
             </Link>
 
             <Link
-              href="/#contact"
-              onClick={(e) => handleNavClick(e, "/#contact", "contact")}
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Contact
@@ -371,14 +361,7 @@ export const Navbar: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
               >
-                EMI Calculator
-              </Link>
-              <Link
-                href="/resources"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
-              >
-                Resources & Insights
+                EMI & SIP Calculators
               </Link>
               <Link
                 href="/testimonials"
@@ -392,7 +375,7 @@ export const Navbar: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
               >
-                Our Partners
+                Our Bank Partners
               </Link>
             </div>
 
