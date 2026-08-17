@@ -102,6 +102,47 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  // Helper to handle anchor navigation and smooth-scrolling.
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (!href.startsWith("/#")) {
+      // Non-anchor: let Link/router handle it
+      return;
+    }
+    const hashMatch = href.match(/#(.+)$/);
+    const id = hashMatch ? hashMatch[1] : null;
+    if (!id) return;
+
+    // If we're already on the homepage, prevent default Link navigation and smooth-scroll
+    if (pathname === "/") {
+      e.preventDefault();
+      // Close mobile menu if open
+      setMobileMenuOpen(false);
+      // Slight timeout to allow any layout changes
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          try {
+            (el as HTMLElement).focus({ preventScroll: true });
+          } catch {}
+        }
+      }, 50);
+      return;
+    }
+
+    // If on a different page, navigate to the homepage with hash — Next will handle it, then attempt to scroll after navigation
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    router.push(href).then(() => {
+      setTimeout(() => {
+        if (typeof document !== "undefined") {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 150);
+    });
+  };
+
   const navbarStyle = isScrolled
     ? "bg-[#0B0F19]/90 backdrop-blur-md shadow-lg border-b border-[#D4AF37]/30"
     : "bg-transparent border-b border-transparent";
@@ -198,6 +239,7 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.label}
                 href={link.href}
+                onClick={(e) => handleNavClick(e as any, link.href)}
                 className={`px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 ${
                   isActive(link.href)
                     ? "text-[#F2D675] bg-white/10 border border-[#D4AF37]/60"
@@ -222,7 +264,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => openConsultationModal("General Consultation")}
-            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale[...]
+            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95"
           >
             Book Consultation
           </button>
@@ -253,7 +295,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile links updated to use the correct hash targets for homepage sections */}
             <Link
               href="/#hero"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e as any, "/#hero")}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Home
@@ -261,7 +303,7 @@ export const Navbar: React.FC = () => {
 
             <Link
               href="/#services"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e as any, "/#services")}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Services
@@ -305,28 +347,28 @@ export const Navbar: React.FC = () => {
             </Link>
             <Link
               href="/#about"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e as any, "/#about")}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               About Us
             </Link>
             <Link
               href="/#leadership"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e as any, "/#leadership")}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Leadership
             </Link>
             <Link
               href="/#careers"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e as any, "/#careers")}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Careers
             </Link>
             <Link
               href="/#contact"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e as any, "/#contact")}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Contact
