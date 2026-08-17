@@ -2,18 +2,32 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { Phone, Mail, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
 import { COMPANY_CONFIG } from "@/lib/config";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion/MotionHelpers";
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const scrollToTarget = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.pushState(null, "", `#${id}`);
+    if (pathname === "/") {
+      if (id === "hero") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.replaceState(null, "", "/");
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          const yOffset = -80;
+          const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+          window.history.replaceState(null, "", `#${id}`);
+        }
+      }
     } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      router.push(`/#${id}`);
     }
   };
 
@@ -102,16 +116,7 @@ export const Footer: React.FC = () => {
                   onClick={() => scrollToTarget("about")}
                   className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
                 >
-                  About Us & Approach
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={() => scrollToTarget("leadership")}
-                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
-                >
-                  Leadership Team
+                  About Us &amp; Approach
                 </button>
               </li>
               <li>
@@ -135,10 +140,53 @@ export const Footer: React.FC = () => {
               <li>
                 <button
                   type="button"
+                  onClick={() => scrollToTarget("contact")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
+                  Contact Us
+                </button>
+              </li>
+            </ul>
+
+            {/* Useful Links — Calculators, Leadership, Careers, Resources */}
+            <h4 className="text-xs font-black text-[#F2D675] tracking-widest uppercase border-b border-[#D4AF37]/30 pb-2 inline-block pt-4">
+              Useful Links
+            </h4>
+            <ul className="space-y-2.5 text-xs text-gray-300 font-medium">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("calculators")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
+                  Calculators
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("leadership")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
+                  Leadership
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
                   onClick={() => scrollToTarget("careers")}
                   className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
                 >
-                  Careers & Culture
+                  Careers
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("resources")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
+                  Resources
                 </button>
               </li>
             </ul>
@@ -147,7 +195,7 @@ export const Footer: React.FC = () => {
           {/* Services Column (3 Cols) */}
           <StaggerItem className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-black text-[#F2D675] tracking-widest uppercase border-b border-[#D4AF37]/30 pb-2 inline-block">
-              Services & Financing
+              Services &amp; Financing
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-300 font-medium">
               <li>
@@ -183,7 +231,7 @@ export const Footer: React.FC = () => {
                   onClick={() => scrollToTarget("divisions")}
                   className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
                 >
-                  Real Estate & Property Advisory
+                  Real Estate &amp; Property Advisory
                 </button>
               </li>
               <li>
@@ -192,7 +240,7 @@ export const Footer: React.FC = () => {
                   onClick={() => scrollToTarget("calculators")}
                   className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
                 >
-                  EMI & Loan Calculator
+                  EMI &amp; Loan Calculator
                 </button>
               </li>
               <li>
@@ -201,7 +249,7 @@ export const Footer: React.FC = () => {
                   onClick={() => scrollToTarget("resources")}
                   className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
                 >
-                  Resources & Insights
+                  Resources &amp; Insights
                 </button>
               </li>
             </ul>
@@ -237,7 +285,7 @@ export const Footer: React.FC = () => {
 
             <div className="pt-2 flex items-center gap-2 text-[11px] text-[#F2D675]">
               <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-              <span className="font-semibold">Privacy Protected & Confidential</span>
+              <span className="font-semibold">Privacy Protected &amp; Confidential</span>
             </div>
           </StaggerItem>
 
@@ -269,7 +317,7 @@ export const Footer: React.FC = () => {
                 onClick={() => scrollToTarget("contact")}
                 className="hover:text-[#F2D675] transition-colors cursor-pointer"
               >
-                Terms & Disclaimer
+                Terms &amp; Disclaimer
               </button>
               <button
                 type="button"
