@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -33,12 +33,14 @@ const SERVICES_DROPDOWN = [
 ];
 
 const NAV_LINKS = [
-  // Small change: use hash targets to scroll to sections on the homepage.
-  { label: "Home", href: "/#home" },
-  // Services keeps dropdown, but main "Services" button will point to the services section on the homepage.
+  // Home should point to the hero section id (hero)
+  { label: "Home", href: "/#hero" },
+  // Services main link points to the services section on the homepage
   { label: "Services", href: "/#services", hasDropdown: true },
-  { label: "Resources", href: "/resources" }, // this appears to be a separate page - keep it as-is
+  { label: "Resources", href: "/resources" },
   { label: "About Us", href: "/#about" },
+  { label: "Leadership", href: "/#leadership" },
+  { label: "Careers", href: "/#careers" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -48,6 +50,7 @@ export const Navbar: React.FC = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const servicesRef = useRef<HTMLDivElement>(null);
   const { openConsultationModal } = useConsultation();
@@ -135,7 +138,8 @@ export const Navbar: React.FC = () => {
             link.hasDropdown ? (
               <div className="relative" ref={servicesRef} key={link.label}>
                 <button
-                  onClick={() => setServicesOpen(!servicesOpen)}
+                  // On click navigate to the services section; hover still opens dropdown
+                  onClick={() => router.push("/#services")}
                   onMouseEnter={() => setServicesOpen(true)}
                   className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     isActive("/services") || isActive("/loans") || isActive("/investments") || isActive("/real-assets") || isActive("/calculators")
@@ -218,7 +222,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => openConsultationModal("General Consultation")}
-            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-95"
+            className="px-5 py-2 bg-gradient-to-r from-[#E5C158] via-[#F2D675] to-[#D4AF37] text-[#4A1515] font-extrabold text-xs xl:text-sm rounded-xl shadow-lg hover:brightness-110 active:scale[...]
           >
             Book Consultation
           </button>
@@ -246,13 +250,21 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-[#0B0F19] border-t border-[#D4AF37]/40 shadow-2xl overflow-y-auto z-50">
           <div className="px-5 py-6 space-y-2">
-            {/* Mobile links updated to use the hash targets for homepage sections */}
+            {/* Mobile links updated to use the correct hash targets for homepage sections */}
             <Link
-              href="/#home"
+              href="/#hero"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Home
+            </Link>
+
+            <Link
+              href="/#services"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            >
+              Services
             </Link>
 
             {/* Mobile Services Accordion */}
@@ -299,6 +311,20 @@ export const Navbar: React.FC = () => {
               About Us
             </Link>
             <Link
+              href="/#leadership"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            >
+              Leadership
+            </Link>
+            <Link
+              href="/#careers"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+            >
+              Careers
+            </Link>
+            <Link
               href="/#contact"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-sm font-semibold text-white hover:bg-white/10 transition-colors"
@@ -321,13 +347,6 @@ export const Navbar: React.FC = () => {
                 className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
               >
                 Our Partners
-              </Link>
-              <Link
-                href="/careers"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-300 hover:bg-white/5 hover:text-[#F2D675] transition-colors"
-              >
-                Careers
               </Link>
             </div>
 
