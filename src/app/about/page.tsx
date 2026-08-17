@@ -17,7 +17,7 @@ export default function AboutPage() {
         eyebrow="WHO WE ARE"
         title="About NP Wealth Managers"
         description="Plan · Manage · Grow · Protect — Delivering transparent financial planning, competitive home loan syndication, and real-asset advisory across India."
-        bgImage="https://images.pexels.com/photos/7845366/pexels-photo-7845366.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+        bgImage="/images/about-hero.jpg"
       />
 
       {/* Company Overview & Mission */}

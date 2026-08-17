@@ -46,9 +46,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
         style={{ backgroundImage: `url('${bgImage}')` }}
       />
 
-      {/* 2. Dark Gradient Overlays for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19] via-[#0B0F19]/85 to-[#0B0F19]/40" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19]/80 via-transparent to-[#0B0F19]/30" />
+      {/* 2. Soft Gradient Overlays — reduced contrast so background images breathe */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19]/90 via-[#0B0F19]/60 to-[#0B0F19]/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19]/60 via-transparent to-[#0B0F19]/15" />
 
       {/* 3. Content Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">

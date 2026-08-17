@@ -17,7 +17,7 @@ export default function LoansPage() {
         eyebrow="MORTGAGE & CREDIT SYNDICATION"
         title="Loan Solutions & Mortgage Guidance"
         description="Home Purchase Loans, Loan Against Property, and Home Loan Balance Transfer optimized across 25+ partner banks & NBFCs."
-        bgImage="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+        bgImage="/images/homeloan-hero.jpg"
       />
 
       {/* 3 Core Loan Offerings */}
