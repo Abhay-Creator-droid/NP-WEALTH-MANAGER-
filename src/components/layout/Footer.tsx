@@ -1,13 +1,22 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
 import { COMPANY_CONFIG } from "@/lib/config";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion/MotionHelpers";
 
 export const Footer: React.FC = () => {
+  const scrollToTarget = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.pushState(null, "", `#${id}`);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="bg-[#0B0F19] text-white border-t border-[#D4AF37]/30 pt-16 pb-12 relative overflow-hidden">
       {/* Background Ambient Glow */}
@@ -20,7 +29,11 @@ export const Footer: React.FC = () => {
 
           {/* Brand Column (4 Cols) */}
           <StaggerItem className="lg:col-span-4 space-y-6">
-            <Link href="/" className="flex items-center gap-3.5 group">
+            <button
+              type="button"
+              onClick={() => scrollToTarget("hero")}
+              className="flex items-center gap-3.5 group text-left cursor-pointer"
+            >
               <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white p-0.5 shadow-lg border border-[#D4AF37]/50 shrink-0 group-hover:scale-105 transition-transform">
                 <Image
                   src={COMPANY_CONFIG.logoUrl}
@@ -41,7 +54,7 @@ export const Footer: React.FC = () => {
                   Plan · Manage · Grow · Protect
                 </span>
               </div>
-            </Link>
+            </button>
 
             <p className="text-gray-300 text-xs leading-relaxed font-normal">
               Structured wealth management, home loan syndication, mortgage solutions, and real-asset advisory tailored for individuals, families, and business enterprises across India.
@@ -84,29 +97,49 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-300 font-medium">
               <li>
-                <Link href="/about" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("about")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   About Us & Approach
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/about" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("leadership")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Leadership Team
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/testimonials" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("testimonials")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Client Stories
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/partners" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("partners")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Our Bank Partners
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/careers" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("careers")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Careers & Culture
-                </Link>
+                </button>
               </li>
             </ul>
           </StaggerItem>
@@ -118,34 +151,58 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-300 font-medium">
               <li>
-                <Link href="/loans" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("services")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Home Loan Solutions
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/loans" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("expertise")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Loan Against Property (LAP)
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/loans" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("expertise")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Home Loan Balance Transfer
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/real-assets" className="hover:text-[#F2D675] transition-colors">
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("divisions")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
                   Real Estate & Property Advisory
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/investments" className="hover:text-[#F2D675] transition-colors">
-                  Wealth & Portfolio Advisory
-                </Link>
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("calculators")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
+                  EMI & Loan Calculator
+                </button>
               </li>
               <li>
-                <Link href="/calculators" className="hover:text-[#F2D675] transition-colors">
-                  EMI & SIP Calculators
-                </Link>
+                <button
+                  type="button"
+                  onClick={() => scrollToTarget("resources")}
+                  className="hover:text-[#F2D675] transition-colors cursor-pointer text-left"
+                >
+                  Resources & Insights
+                </button>
               </li>
             </ul>
           </StaggerItem>
@@ -168,7 +225,7 @@ export const Footer: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="absolute right-1 top-1 bottom-1 px-3 bg-[#D4AF37] text-[#0B0F19] rounded-lg font-bold text-xs hover:bg-[#F2D675] transition-colors"
+                  className="absolute right-1 top-1 bottom-1 px-3 bg-[#D4AF37] text-[#0B0F19] rounded-lg font-bold text-xs hover:bg-[#F2D675] transition-colors cursor-pointer"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
@@ -200,15 +257,27 @@ export const Footer: React.FC = () => {
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
             <p>© {new Date().getFullYear()} NP WEALTH MANAGERS. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <Link href="/contact" className="hover:text-[#F2D675] transition-colors">
+              <button
+                type="button"
+                onClick={() => scrollToTarget("contact")}
+                className="hover:text-[#F2D675] transition-colors cursor-pointer"
+              >
                 Privacy Policy
-              </Link>
-              <Link href="/contact" className="hover:text-[#F2D675] transition-colors">
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToTarget("contact")}
+                className="hover:text-[#F2D675] transition-colors cursor-pointer"
+              >
                 Terms & Disclaimer
-              </Link>
-              <Link href="/contact" className="hover:text-[#F2D675] transition-colors">
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToTarget("contact")}
+                className="hover:text-[#F2D675] transition-colors cursor-pointer"
+              >
                 Contact Desk
-              </Link>
+              </button>
             </div>
           </div>
         </FadeIn>
