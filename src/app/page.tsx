@@ -11,8 +11,10 @@ import { EmiCalculator } from "@/components/sections/EmiCalculator";
 import { TeamSection } from "@/components/sections/TeamSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { PartnersSection } from "@/components/sections/PartnersSection";
+import { CareersSection } from "@/components/sections/CareersSection";
 import { ResourcesSection } from "@/components/sections/ResourcesSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
+import { ContactSection } from "@/components/sections/ContactSection";
 
 export const metadata = {
   title: "NP Wealth Managers | Build Your Wealth",
@@ -22,47 +24,53 @@ export const metadata = {
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#0B0F19]">
-      {/* 1. Cinematic Hero */}
+      {/* 1. Cinematic Hero (#hero) */}
       <HeroSection />
 
-      {/* 2. Stats Bar */}
+      {/* 2. Stats Bar (#stats) */}
       <TrustBar />
 
-      {/* 3. Expertise Grid */}
+      {/* 3. Expertise Grid (#expertise) */}
       <ExpertiseSection />
 
-      {/* 4. Two Core Divisions */}
+      {/* 4. Two Core Divisions (#divisions) */}
       <TwoWaysSection />
 
-      {/* 5. About Section */}
+      {/* 5. About Section (#about) */}
       <AboutSection />
 
-      {/* 6. Services Catalog */}
+      {/* 6. Services Catalog (#services) */}
       <ServicesSection />
 
-      {/* 7. Why Choose Us */}
+      {/* 7. Why Choose Us (#why-choose-us) */}
       <WhyChooseUs />
 
-      {/* 8. Our Approach */}
+      {/* 8. Our Approach (#approach) */}
       <HowItWorks />
 
-      {/* 9. EMI Calculator */}
+      {/* 9. EMI Calculator (#calculators) */}
       <EmiCalculator />
 
-      {/* 10. Leadership Team */}
+      {/* 10. Leadership Team (#leadership) */}
       <TeamSection />
 
-      {/* 11. Client Testimonials */}
+      {/* 11. Client Testimonials (#testimonials) */}
       <TestimonialsSection />
 
-      {/* 12. Partner Banks */}
+      {/* 12. Partner Banks (#partners) */}
       <PartnersSection />
 
-      {/* 13. Resources & Insights */}
+      {/* 13. Careers (#careers) */}
+      <CareersSection />
+
+      {/* 14. Resources & Insights (#resources) */}
       <ResourcesSection />
 
-      {/* 14. Final CTA */}
+      {/* 15. Final CTA (#contact-cta) */}
       <FinalCtaSection />
+
+      {/* 16. Contact Desk (#contact) */}
+      <ContactSection settings={null} />
     </main>
   );
 }

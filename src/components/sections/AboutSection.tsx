@@ -10,7 +10,7 @@ export const AboutSection: React.FC = () => {
   const { openConsultationModal } = useConsultation();
 
   return (
-    <section id="about" className="py-24 bg-[#FDF8F0] text-[#111827] relative border-b border-[#D4AF37]/20 overflow-hidden">
+    <section id="about" className="py-24 bg-[#FDF8F0] text-[#111827] relative border-b border-[#D4AF37]/20 overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">

@@ -46,7 +46,7 @@ export const EmiCalculator: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#FDF8F0] py-20 border-b border-[#D4AF37]/20 relative">
+    <section id="calculators" className="bg-[#FDF8F0] py-20 border-b border-[#D4AF37]/20 relative scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}

@@ -30,7 +30,7 @@ export const ServicesSection: React.FC = () => {
   const { openConsultationModal } = useConsultation();
 
   return (
-    <section id="services" className="relative bg-[#0B0F19] text-white py-24 border-b border-[#D4AF37]/30 overflow-hidden">
+    <section id="services" className="relative bg-[#0B0F19] text-white py-24 border-b border-[#D4AF37]/30 overflow-hidden scroll-mt-16">
       {/* Ambient Glow */}
       <div className="absolute top-0 right-10 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none"></div>
 

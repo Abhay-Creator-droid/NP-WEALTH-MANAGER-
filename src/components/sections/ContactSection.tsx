@@ -29,7 +29,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ settings }) => {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <section id="contact" className="py-24 bg-white text-[#1A0505] relative border-t border-slate-200">
+    <section id="contact" className="py-24 bg-white text-[#1A0505] relative border-t border-slate-200 scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

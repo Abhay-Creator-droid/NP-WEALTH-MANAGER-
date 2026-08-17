@@ -17,7 +17,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export const WhyChooseUs: React.FC = () => {
   return (
-    <section id="why-choose-us" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden">
+    <section id="why-choose-us" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

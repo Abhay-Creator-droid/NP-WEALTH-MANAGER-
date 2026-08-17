@@ -7,7 +7,7 @@ import { TWO_CORE_AREAS } from "@/lib/data";
 
 export const TwoWaysSection: React.FC = () => {
   return (
-    <section className="bg-[#0B0F19] text-white py-24 border-b border-[#D4AF37]/30 relative overflow-hidden">
+    <section id="divisions" className="bg-[#0B0F19] text-white py-24 border-b border-[#D4AF37]/30 relative overflow-hidden scroll-mt-16">
       {/* Background Ambient Lights */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#1F2937]/40 rounded-full blur-3xl pointer-events-none"></div>

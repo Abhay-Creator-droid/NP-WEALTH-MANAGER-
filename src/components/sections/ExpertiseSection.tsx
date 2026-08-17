@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import {
   Home,
   FileText,
@@ -13,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { EXPERTISE_SERVICES, ExpertiseItem } from "@/lib/data";
+import { useConsultation } from "@/context/ConsultationContext";
 
 const ICON_MAP: Record<string, React.ElementType> = {
   Home: Home,
@@ -24,8 +24,10 @@ const ICON_MAP: Record<string, React.ElementType> = {
 };
 
 export const ExpertiseSection: React.FC = () => {
+  const { openConsultationModal } = useConsultation();
+
   return (
-    <section className="bg-[#FDF8F0] py-20 border-b border-[#D4AF37]/20 relative">
+    <section id="expertise" className="bg-[#FDF8F0] py-20 border-b border-[#D4AF37]/20 relative scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
@@ -82,11 +84,15 @@ export const ExpertiseSection: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Learn More Link */}
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-extrabold text-[#111827] group-hover:text-[#D4AF37] transition-colors">
+                {/* Explore Solution Button */}
+                <button
+                  type="button"
+                  onClick={() => openConsultationModal(item.title)}
+                  className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-extrabold text-[#111827] group-hover:text-[#D4AF37] transition-colors cursor-pointer w-full text-left"
+                >
                   <span>Explore Solution</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
+                </button>
               </div>
             );
           })}

@@ -10,7 +10,7 @@ export const CareersSection: React.FC = () => {
   const { openConsultationModal } = useConsultation();
 
   return (
-    <section id="careers" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden">
+    <section id="careers" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Split Reveal Box */}

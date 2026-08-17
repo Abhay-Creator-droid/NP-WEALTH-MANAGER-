@@ -9,7 +9,7 @@ import { FadeIn, ClipReveal, StaggerContainer, StaggerItem, EASING } from "@/com
 
 export const TeamSection: React.FC = () => {
   return (
-    <section id="leadership" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden">
+    <section id="leadership" className="bg-[#FFF9F0] py-20 border-b border-[#D4AF37]/20 relative overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
