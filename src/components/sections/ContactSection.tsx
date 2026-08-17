@@ -24,8 +24,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ settings }) => {
   const phoneHref = `tel:${phoneRaw}`;
   const emailHref = `mailto:${email}`;
   const businessWeekdays = typeof businessHours === "object" && businessHours?.weekdays ? businessHours.weekdays : COMPANY_CONFIG.businessHours.weekdays;
-  const businessSaturday = typeof businessHours === "object" && businessHours?.saturday ? businessHours.saturday : COMPANY_CONFIG.businessHours.saturday;
-  const businessSunday = typeof businessHours === "object" && businessHours?.sunday ? businessHours.sunday : COMPANY_CONFIG.businessHours.sunday;
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
@@ -121,8 +119,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ settings }) => {
                   Official Business Hours
                 </span>
                 <p className="font-bold text-brand-red">{businessWeekdays}</p>
-                <p className="font-semibold text-slate-700">{businessSaturday}</p>
-                <p className="text-slate-400">{businessSunday}</p>
               </div>
             </div>
 
