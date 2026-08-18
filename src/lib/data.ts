@@ -322,6 +322,7 @@ export interface LeadershipMember {
   designation: string;
   experience: string;
   bio: string;
+  mission: string;
   photoUrl: string;
   linkedinUrl?: string;
 }
@@ -329,30 +330,21 @@ export interface LeadershipMember {
 export const LEADERSHIP_TEAM: LeadershipMember[] = [
   {
     id: "leader-1",
-    name: "N. P. Singh",
-    designation: "Founder & Managing Director",
-    experience: "15+ Years Industry Leadership",
-    bio: "Over 15 years of expertise in wealth management, home loan syndication, and strategic real estate advisory across major Indian markets.",
-    photoUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
-    linkedinUrl: "https://linkedin.com",
+    name: "Pankaj Sharma",
+    designation: "Founder & Chief Wealth Planner",
+    experience: "Founder & Chief Wealth Planner",
+    bio: "As a founder at NP Wealth Manager, Pankaj leads the vision of 'Your Wealth, Our Priority.'",
+    mission: "Help 1000+ families build 3x wealth in 10 years.",
+    photoUrl: "/images/leadership/pankaj-sharma.png",
   },
   {
     id: "leader-2",
-    name: "P. Pratap",
-    designation: "Director - Lending & Mortgage Desk",
-    experience: "12+ Years Banking & Finance Focus",
-    bio: "Specializes in home loan balance transfers, loan against property, and credit underwriting alignment with top Indian banking partners.",
-    photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
-    linkedinUrl: "https://linkedin.com",
-  },
-  {
-    id: "leader-3",
-    name: "Anand Sharma",
-    designation: "Head - Real Estate & Assets",
-    experience: "10+ Years Property Advisory",
-    bio: "Leads residential and commercial property advisory, conducting structural due-diligence and strategic site evaluations.",
-    photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop",
-    linkedinUrl: "https://linkedin.com",
+    name: "Navdeep Kaur",
+    designation: "Co-Founder & CEO",
+    experience: "Co-Founder & CEO",
+    bio: "As a director at NP Wealth Manager, Navdeep drives the 'GROW' engine of our wealth creation framework.",
+    mission: "Help clients beat inflation and build long-term wealth.",
+    photoUrl: "/images/leadership/navdeep-kaur.jpg",
   },
 ];
 
